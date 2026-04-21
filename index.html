@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DONATELLO | ///</title>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
@@ -13,6 +13,15 @@
             --grey: #1a1a1a;
         }
 
+        /* Viewport Lockdown */
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: var(--bg);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -21,10 +30,8 @@
         }
 
         body {
-            background: var(--bg);
             color: var(--fg);
             font-family: 'Space Mono', monospace;
-            overflow-x: hidden;
             text-transform: uppercase;
         }
 
@@ -80,6 +87,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            width: 100%;
         }
 
         .logo-container {
@@ -118,6 +126,55 @@
             transform: skewX(-10deg);
         }
 
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            background: none;
+            border: none;
+            padding: 10px;
+            z-index: 1001;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 30px;
+            height: 2px;
+            background: var(--neon);
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .mobile-nav.active { transform: translateX(0); }
+        .mobile-nav a {
+            font-family: 'Anton', sans-serif;
+            font-size: 4rem;
+            color: var(--fg);
+            text-decoration: none;
+            letter-spacing: 5px;
+            transition: 0.3s;
+        }
+        .mobile-nav a:hover { color: var(--neon); transform: scale(1.1); }
+
         .reveal {
             opacity: 0;
             transform: translateY(60px) scale(0.9);
@@ -143,16 +200,14 @@
         }
 
         .glitch-text {
-            font-size: clamp(3rem, 15vw, 12rem); /* Reduced min font size for mobile */
+            font-size: clamp(3rem, 15vw, 12rem);
             color: transparent; 
             -webkit-text-stroke: 1.5px var(--fg);
             position: relative;
             display: block;
         }
 
-        .hero h1:nth-child(2).glitch-text {
-            -webkit-text-stroke: 1.5px var(--neon);
-        }
+        .hero h1:nth-child(2).glitch-text { -webkit-text-stroke: 1.5px var(--neon); }
 
         .letter {
             display: inline-block;
@@ -207,7 +262,7 @@
             position: sticky;
             top: 0;
             height: 100vh;
-            width: 100vw;
+            width: 100%;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -232,15 +287,11 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            /* CRITICAL: Removed transition: transform to fix sync lag */
             box-shadow: 15px 15px 0px var(--bg);
             color: var(--bg);
         }
 
-        .verge-card:nth-child(even) {
-            box-shadow: 15px 15px 0px var(--neon);
-        }
-
+        .verge-card:nth-child(even) { box-shadow: 15px 15px 0px var(--neon); }
         .verge-card h3 { font-size: 4.5rem; line-height: 0.85; color: var(--bg); }
         .verge-card p { font-size: 1.2rem; line-height: 1.5; color: #444; max-width: 90%; }
 
@@ -259,24 +310,11 @@
             color: var(--neon);
         }
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         /* LAB GALLERY */
-        .lab-section {
-            padding: 10rem 2rem;
-            border-bottom: 1px solid var(--grey);
-        }
-
-        .lab-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 4rem;
-        }
-
+        .lab-section { padding: 10rem 2rem; border-bottom: 1px solid var(--grey); }
+        .lab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; margin-top: 4rem; }
         .lab-item {
             aspect-ratio: 1;
             border: 2px solid var(--grey);
@@ -289,12 +327,11 @@
             overflow: hidden;
             background: rgba(0, 0, 0, 0.8);
         }
-
         .lab-item:hover { border-color: var(--neon); background: rgba(204, 255, 0, 0.1); }
         .lab-item h4 { font-size: 2.2rem; margin-bottom: 1rem; color: #fff; z-index: 10; position: relative; }
         .lab-item span { font-size: 0.9rem; color: var(--neon); z-index: 10; position: relative; font-weight: 800; }
 
-        /* ABOUT SECTION (VERGE STYLE) */
+        /* ABOUT SECTION */
         .about-section {
             background: #fff;
             color: #000;
@@ -304,22 +341,10 @@
             align-items: center;
             position: relative;
             z-index: 10;
+            width: 100%;
         }
-
-        .about-grid {
-            max-width: 1200px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-        }
-
-        .about-title { 
-            font-size: clamp(4rem, 10vw, 8rem); 
-            line-height: 0.8; 
-            letter-spacing: -5px; 
-            color: #000 !important; 
-            -webkit-text-stroke: 0 !important;
-        }
+        .about-grid { max-width: 1200px; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+        .about-title { font-size: clamp(4rem, 10vw, 8rem); line-height: 0.8; letter-spacing: -5px; color: #000 !important; -webkit-text-stroke: 0 !important; }
         .about-text { font-size: 1.2rem; line-height: 1.4; font-family: 'Space Mono', monospace; }
 
         .glass-target {
@@ -328,68 +353,30 @@
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
         }
 
-        .projects {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 1px;
-            background: var(--grey);
-            padding: 0;
-            border-top: 1px solid var(--grey);
-        }
-
-        .project-card {
-            background: var(--bg);
-            padding: 8rem 4rem;
-            position: relative;
-            transition: background 0.4s ease;
-            min-height: 500px;
-        }
-
+        .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 1px; background: var(--grey); padding: 0; border-top: 1px solid var(--grey); }
+        .project-card { background: var(--bg); padding: 8rem 4rem; position: relative; transition: background 0.4s ease; min-height: 500px; }
         .project-card:hover { background: #080808; }
-        .project-num {
-            font-family: 'Anton', sans-serif;
-            font-size: 10rem;
-            color: var(--grey);
-            position: absolute;
-            top: 2rem; right: 2rem;
-            opacity: 0.15;
-            pointer-events: none;
-        }
-
+        .project-num { font-family: 'Anton', sans-serif; font-size: 10rem; color: var(--grey); position: absolute; top: 2rem; right: 2rem; opacity: 0.15; pointer-events: none; }
         .project-title { font-size: 5.5rem; margin-bottom: 2.5rem; color: var(--fg); }
         .project-desc { font-size: 1.1rem; color: #666; max-width: 85%; line-height: 1.8; }
 
-        .footer {
-            padding: 10rem 2rem;
-            text-align: center;
-            border-top: 1px solid var(--grey);
-        }
-
-        .system-stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            border-top: 1px solid var(--grey);
-            padding: 2rem;
-            font-size: 0.7rem;
-            color: #444; background: var(--bg);
-        }
+        .footer { padding: 10rem 2rem; text-align: center; border-top: 1px solid var(--grey); width: 100%; }
+        .system-stats { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--grey); padding: 2rem; font-size: 0.7rem; color: #444; background: var(--bg); width: 100%; }
 
         @media (max-width: 768px) {
-            .hero { padding: 6rem 1.5rem; }
+            nav { padding: 1rem 1.5rem; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .hero { padding: 8rem 1.5rem; }
             .hero-sub { flex-direction: column; align-items: flex-start; gap: 3rem; }
             .hero-desc { border-left: none; border-top: 2px solid var(--neon); padding: 1.5rem 0; width: 100%; }
-            
-            /* Polished Horizontal Scroll for Mobile */
             .sticky-wrapper { height: 350vh; } 
-            .verge-card { min-width: 80vw; height: 60vh; padding: 2.5rem; }
-            .verge-card h3 { font-size: 2.5rem; }
-            .verge-card p { font-size: 1rem; }
-            
+            .verge-card { min-width: 85vw; height: 60vh; padding: 2.5rem; box-shadow: 10px 10px 0px var(--bg); }
+            .verge-card h3 { font-size: 2.8rem; }
             .about-grid { grid-template-columns: 1fr; gap: 2rem; }
             .projects { grid-template-columns: 1fr; }
             .project-card { padding: 4rem 1.5rem; min-height: 350px; }
-            .project-title { font-size: 2.5rem; }
-            .nav-links { display: none; }
+            .project-title { font-size: 2.8rem; }
             .system-stats { grid-template-columns: 1fr 1fr; gap: 1rem; }
             .cursor { display: none; } 
             * { cursor: auto !important; }
@@ -398,7 +385,7 @@
 </head>
 <body>
 
-    <div id="loader">POLISHING_EYE_CANDY ///</div>
+    <div id="loader">DEPLOYING_MOBILE_CORE ///</div>
 
     <canvas id="webgl-particles-bg"></canvas>
     <canvas id="webgl-cards-bg"></canvas>
@@ -416,16 +403,26 @@
             <a href="#lab" class="hover-target">LAB</a>
             <a href="#about" class="hover-target">ABOUT</a>
             <a href="#contact" class="hover-target">CONTACT</a>
-            <a href="#" class="hover-target" style="border: 1px solid var(--neon);">RESUME</a>
         </div>
+        <button class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </button>
     </nav>
+
+    <div class="mobile-nav" id="mobile-nav">
+        <a href="#work">WORK</a>
+        <a href="#stack">STACK</a>
+        <a href="#lab">LAB</a>
+        <a href="#about">ABOUT</a>
+        <a href="#contact">CONTACT</a>
+    </div>
 
     <section class="hero">
         <h1 class="glitch-text hover-target reveal">DONATELLO</h1>
         <h1 class="glitch-text hover-target reveal">CREATIVE_DEV</h1>
         
         <div class="hero-sub reveal">
-            <p class="hero-desc">SPECIALIZING IN THE INTERSECTION OF APPLIED MATHEMATICS AND FRONT-END ARCHITECTURE. I DON'T JUST BUILD WEBSITES; I ENGINEER PERFORMANCE-FIRST DIGITAL EXPERIENCES THAT LEVERAGE THE FULL POWER OF YOUR GPU. LOCATED IN NAKURU, KENYA. SCROLL TO INITIALIZE SYSTEM OVERVIEW.</p>
+            <p class="hero-desc">SPECIALIZING IN THE INTERSECTION OF APPLIED MATHEMATICS AND FRONT-END ARCHITECTURE. LOCATED IN NAKURU, KENYA. SCROLL FOR SYSTEM ARCHIVE.</p>
             <a href="#work" class="brutal-btn hover-target glass-target">EXECUTE_ARCHIVE ///</a>
         </div>
     </section>
@@ -436,27 +433,27 @@
                 <div class="verge-card hover-target" data-terminal="true">
                     <span class="verge-tag">MODULE_01</span>
                     <h3 data-text="WEBGL_2.0"></h3>
-                    <p data-text="SHADERS, FRAGMENT LOGIC, AND GPGPU COMPUTATION FOR HIGH-PERFORMANCE FLUID SIMULATIONS AND PARTICLE RENDERERS."></p>
+                    <p data-text="SHADERS, FRAGMENT LOGIC, AND GPGPU COMPUTATION FOR HIGH-PERFORMANCE RENDERERS."></p>
                 </div>
                 <div class="verge-card hover-target" data-terminal="true">
                     <span class="verge-tag">MODULE_02</span>
                     <h3 data-text="REACT_CORE"></h3>
-                    <p data-text="BUILDING SCALABLE COMPONENT ARCHITECTURES FOR ENTERPRISE-GRADE SYSTEMS WITH A FOCUS ON RENDER OPTIMIZATION."></p>
+                    <p data-text="BUILDING SCALABLE ARCHITECTURES WITH A FOCUS ON RENDER OPTIMIZATION."></p>
                 </div>
                 <div class="verge-card hover-target" data-terminal="true">
                     <span class="verge-tag">MODULE_03</span>
                     <h3 data-text="TYPESCRIPT"></h3>
-                    <p data-text="IMPLEMENTING RIGID TYPE-SAFE DEVELOPMENT PIPELINES TO ENSURE TOTAL SYSTEM INTEGRITY AND SCALABILITY."></p>
+                    <p data-text="IMPLEMENTING TYPE-SAFE PIPELINES TO ENSURE TOTAL SYSTEM INTEGRITY."></p>
                 </div>
                 <div class="verge-card hover-target" data-terminal="true">
                     <span class="verge-tag">MODULE_04</span>
                     <h3 data-text="GLSL_OPS"></h3>
-                    <p data-text="CUSTOM GRAPHICS PIPELINES WRITTEN IN PURE C-LIKE SHADING LANGUAGE TO BYPASS STANDARD CSS LIMITATIONS."></p>
+                    <p data-text="CUSTOM GRAPHICS PIPELINES WRITTEN IN PURE C-LIKE SHADING LANGUAGE."></p>
                 </div>
                 <div class="verge-card hover-target" data-terminal="true">
                     <span class="verge-tag">MODULE_05</span>
                     <h3 data-text="UI_BRUTALISM"></h3>
-                    <p data-text="CHALLENGING MODERN ACCESSIBILITY STANDARDS WITH AGGRESSIVE TYPOGRAPHY AND HIGH-CONTRAST INTERFACES."></p>
+                    <p data-text="CHALLENGING STANDARDS WITH AGGRESSIVE TYPOGRAPHY AND HIGH-CONTRAST INTERFACES."></p>
                 </div>
             </div>
         </div>
@@ -476,17 +473,17 @@
         <div class="project-card hover-target glass-target reveal">
             <div class="project-num">01</div>
             <h2 class="project-title">NEURAL_VOID</h2>
-            <p class="project-desc">A MASSIVE PARTICLE FIELD SIMULATION UTILIZING 500K+ AGENTS. INTEGRATES SPATIAL HASHING FOR REAL-TIME COLLISION AND MOUSE INTERACTION AT 60FPS.</p>
+            <p class="project-desc">A MASSIVE PARTICLE FIELD SIMULATION UTILIZING 500K+ AGENTS. OPTIMIZED FOR 60FPS.</p>
         </div>
         <div class="project-card hover-target glass-target reveal">
             <div class="project-num">02</div>
             <h2 class="project-title">REFRACT_OS</h2>
-            <p class="project-desc">A DESIGN SYSTEM BUILT AROUND PHYSICAL LIGHT REFRACTION. UTILIZES WEBGL TEXTURE RE-PROJECTION TO WARP BACKGROUND DOM ELEMENTS DYNAMICALLY.</p>
+            <p class="project-desc">A DESIGN SYSTEM BUILT AROUND PHYSICAL LIGHT REFRACTION AND DYNAMIC WARPS.</p>
         </div>
         <div class="project-card hover-target glass-target reveal">
             <div class="project-num">03</div>
             <h2 class="project-title">BRUTAL_GRID</h2>
-            <p class="project-desc">A HIGH-CONTRAST EDITORIAL FRAMEWORK DESIGNED FOR DENSE INFORMATION READABILITY. PROVING THAT ACCESSIBILITY DOESN'T HAVE TO BE BORING.</p>
+            <p class="project-desc">A HIGH-CONTRAST EDITORIAL FRAMEWORK DESIGNED FOR DENSE INFORMATION READABILITY.</p>
         </div>
     </section>
 
@@ -497,9 +494,9 @@
             </div>
             <div class="reveal">
                 <p class="about-text">
-                    I'M DONATELLO, A CREATIVE DEVELOPER HAILING FROM NAKURU, KENYA. I SPEND MY DAYS CONVERTING COMPLEX MATHEMATICAL THEOREMS INTO FRAGMENT SHADERS THAT MAKE BROWSER ENGINES CRY. 
+                    I'M DONATELLO, A CREATIVE DEVELOPER FROM KENYA. I SPEND MY DAYS CONVERTING MATHEMATICAL THEOREMS INTO FRAGMENT SHADERS THAT MAKE ENGINES CRY. 
                     <br><br>
-                    MY PHILOSOPHY IS SIMPLE: IF IT DOESN'T CHALLENGE THE HARDWARE, IT'S NOT DESIGN. I SPECIALIZE IN BRUTALIST AESTHETICS, WEBGL PIPELINES, AND BUILDING DIGITAL ARTIFACTS THAT STAND OUT IN A WORLD OF OVER-USED TEMPLATES.
+                    IF IT DOESN'T CHALLENGE THE HARDWARE, IT'S NOT DESIGN. I SPECIALIZE IN BRUTALIST AESTHETICS AND WEBGL PIPELINES.
                 </p>
                 <div style="margin-top: 3rem;">
                     <a href="#" class="brutal-btn hover-target" style="box-shadow: 6px 6px 0px #000; border-color: #000; color: #000;">DOWNLOAD_CV.PDF</a>
@@ -516,14 +513,28 @@
     </footer>
 
     <div class="system-stats">
-        <div>CPU_USAGE: 04%</div>
-        <div>GPU_TEMP: 62°C</div>
-        <div>LATENCY: 0.003MS</div>
-        <div>UPTIME: 99.9997%</div>
+        <div>STATS: STABLE</div>
+        <div>TEMP: NOMINAL</div>
+        <div>LATENCY: < 1MS</div>
+        <div>Uptime: 99.9%</div>
     </div>
 
     <script>
-        window.addEventListener('load', () => { setTimeout(() => { const l = document.getElementById('loader'); l.style.opacity = '0'; setTimeout(() => l.style.visibility = 'hidden', 800); }, 1200); });
+        window.addEventListener('load', () => { setTimeout(() => { const l = document.getElementById('loader'); if(l) { l.style.opacity = '0'; setTimeout(() => l.style.display = 'none', 800); } }, 1200); });
+
+        // Hamburger Logic
+        const ham = document.getElementById('hamburger');
+        const mNav = document.getElementById('mobile-nav');
+        ham.addEventListener('click', () => {
+            ham.classList.toggle('active');
+            mNav.classList.toggle('active');
+            document.body.style.overflow = mNav.classList.contains('active') ? 'hidden' : '';
+        });
+        mNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+            ham.classList.remove('active');
+            mNav.classList.remove('active');
+            document.body.style.overflow = '';
+        }));
 
         let glassElements = [];
         let cardRects = new Float32Array(80); 
@@ -544,11 +555,12 @@
             const rect = stickyWrapper.getBoundingClientRect();
             const viewH = window.innerHeight;
             if (rect.top <= 0 && rect.bottom >= viewH) {
-                const percentage = Math.abs(rect.top) / (rect.height - viewH);
+                const p = Math.abs(rect.top) / (rect.height - viewH);
                 const maxT = horizontalTrack.offsetWidth - window.innerWidth;
-                horizontalTrack.style.transform = `translateX(-${percentage * maxT}px)`;
+                horizontalTrack.style.transform = `translateX(-${p * maxT}px)`;
+            } else if (rect.top > 0) {
+                horizontalTrack.style.transform = `translateX(0px)`;
             }
-            // Perfect sync: call rect update in the same frame
             updateGlassRects();
         }
         window.addEventListener('scroll', () => { requestAnimationFrame(syncScroll); }, { passive: true });
@@ -623,26 +635,24 @@
             precision highp float; varying float v_alpha; varying vec2 v_pos;
             void main() {
                 vec2 uv = gl_PointCoord - 0.5; float r = length(uv); if(r > 0.5) discard;
-                float shift = length(v_pos) * 0.08;
+                float shift = length(v_pos) * 0.06;
                 float rR = length(uv + vec2(shift, 0.0)), rG = length(uv), rB = length(uv - vec2(shift, 0.0));
                 float core = pow(max(0.0, 1.0 - r * 2.0), 4.0);
                 float bR = pow(max(0.0, 1.0 - rR * 2.0), 2.0), bG = pow(max(0.0, 1.0 - rG * 2.0), 2.0), bB = pow(max(0.0, 1.0 - rB * 2.0), 2.0);
-                gl_FragColor = vec4(bR*0.85, bG*1.0, bB*0.4, v_alpha * (core + bG*0.4));
+                gl_FragColor = vec4(bR*0.8, bG*1.0, bB*0.4, v_alpha * (core + bG*0.5));
             }
         `;
         function createProg(gl, vsS, fsS) {
             const p = gl.createProgram();
-            const s = (t, src) => { const s = gl.createShader(t); gl.shaderSource(s, src); gl.compileShader(s); 
-                if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(s)); return null; } return s; };
+            const s = (t, src) => { const s = gl.createShader(t); gl.shaderSource(s, src); gl.compileShader(s); return s; };
             const vs = s(gl.VERTEX_SHADER, vsS), fs = s(gl.FRAGMENT_SHADER, fsS);
-            if(!vs || !fs) return null; gl.attachShader(p, vs); gl.attachShader(p, fs); gl.linkProgram(p); 
-            if(!gl.getProgramParameter(p, gl.LINK_STATUS)) { console.error(gl.getProgramInfoLog(p)); return null; } return p;
+            gl.attachShader(p, vs); gl.attachShader(p, fs); gl.linkProgram(p); return p;
         }
         const pProg = createProg(glP, pVS, pFS); glP.useProgram(pProg);
         const pCount = 100000, pDat = new Float32Array(pCount * 3), pIds = new Float32Array(pCount);
-        for(let i=0; i<pCount; i++) { pDat[i*3]=(Math.random()-0.5)*window.innerWidth*4.0; pDat[i*3+1]=(Math.random()-0.5)*window.innerHeight*25; pDat[i*3+2]=(Math.random()-0.5)*1800; pIds[i]=Math.random()*3000; }
-        const b = (gl, prg, name, dat, sz) => { const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, dat, gl.STATIC_DRAW); const l = gl.getAttribLocation(prg, name); gl.enableVertexAttribArray(l); gl.vertexAttribPointer(l, sz, gl.FLOAT, false, 0, 0); };
-        b(glP, pProg, 'a_pos', pDat, 3); b(glP, pProg, 'a_id', pIds, 1);
+        for(let i=0; i<pCount; i++) { pDat[i*3]=(Math.random()-0.5)*1500*4.0; pDat[i*3+1]=(Math.random()-0.5)*1000*25; pDat[i*3+2]=(Math.random()-0.5)*1800; pIds[i]=Math.random()*3000; }
+        const buf = (gl, prg, name, dat, sz) => { const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, dat, gl.STATIC_DRAW); const l = gl.getAttribLocation(prg, name); gl.enableVertexAttribArray(l); gl.vertexAttribPointer(l, sz, gl.FLOAT, false, 0, 0); };
+        buf(glP, pProg, 'a_pos', pDat, 3); buf(glP, pProg, 'a_id', pIds, 1);
         glP.enable(glP.BLEND); glP.blendFunc(glP.SRC_ALPHA, glP.ONE);
         const uLocP = { res: glP.getUniformLocation(pProg, 'u_res'), mouse: glP.getUniformLocation(pProg, 'u_mouse'), time: glP.getUniformLocation(pProg, 'u_time') };
 
@@ -654,7 +664,7 @@
                 vec2 f = gl_FragCoord.xy; bool isG = false;
                 for(int i=0; i<20; i++) { if(i >= u_num) break; vec4 b = u_cards[i]; if(f.x > b.x && f.x < b.x+b.z && f.y > b.y && f.y < b.y+b.w) { isG = true; break; } }
                 if(!isG) discard;
-                gl_FragColor = vec4(0.8, 1.0, 0.0, 0.05 + 0.02 * hash(f/u_res + u_time*0.01));
+                gl_FragColor = vec4(0.8, 1.0, 0.0, 0.06 + 0.03 * hash(f/u_res + u_time*0.01));
             }
         `;
         const cProg = createProg(glC, `attribute vec2 a_p; void main() { gl_Position = vec4(a_p, 0.0, 1.0); }`, cFS); glC.useProgram(cProg);
@@ -666,8 +676,7 @@
         function draw() {
             const t = (Date.now()-start)*0.001;
             if(partCanvas.width !== window.innerWidth) { partCanvas.width = glC.canvas.width = window.innerWidth; partCanvas.height = glC.canvas.height = window.innerHeight; glP.viewport(0,0,partCanvas.width,partCanvas.height); glC.viewport(0,0,partCanvas.width,partCanvas.height); updateGlassRects(); }
-            glP.clear(glP.COLOR_BUFFER_BIT); glP.uniform2f(uLocP.res, partCanvas.width, partCanvas.height); glP.uniform2f(uLocP.mouse, mouseX, mouseY); glP.uniform1f(uLocP.time, t); glP.drawArrays(glP.POINTS, 0, pCount);
-            glP.useProgram(pProg); // ensure program state
+            glP.clear(glP.COLOR_BUFFER_BIT); glP.useProgram(pProg); glP.uniform2f(uLocP.res, partCanvas.width, partCanvas.height); glP.uniform2f(uLocP.mouse, mouseX, mouseY); glP.uniform1f(uLocP.time, t); glP.drawArrays(glP.POINTS, 0, pCount);
             glC.clear(glC.COLOR_BUFFER_BIT); glC.useProgram(cProg); glC.uniform2f(uLocC.res, glC.canvas.width, glC.canvas.height); glC.uniform1f(uLocC.time, t); glC.uniform4fv(uLocC.cards, cardRects); glC.uniform1i(uLocC.num, Math.min(glassElements.length, 20)); glC.drawArrays(glC.TRIANGLES, 0, 6);
             requestAnimationFrame(draw);
         }
