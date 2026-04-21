@@ -374,18 +374,14 @@
             color: #444; background: var(--bg);
         }
 
-        /* MOBILE RESPONSIVE OVERRIDES */
         @media (max-width: 768px) {
             .hero { padding: 8rem 1rem; }
             .hero-sub { flex-direction: column; align-items: flex-start; gap: 4rem; }
             .hero-desc { border-left: none; border-top: 2px solid var(--neon); padding-left: 0; }
-            
-            /* Disable horizontal scroll on mobile */
             .sticky-wrapper { height: auto !important; }
-            .sticky-container { position: relative !important; height: auto !important; overflow: visible !important; }
-            .horizontal-content { flex-direction: column; padding: 2rem 1rem; gap: 2rem; }
-            .verge-card { min-width: 100%; height: auto; min-height: 400px; padding: 2rem; }
-            
+            .sticky-container { position: relative !important; height: auto !important; overflow: visible !important; display: block !important; }
+            .horizontal-content { flex-direction: column !important; padding: 2rem 1rem !important; gap: 2rem !important; transform: none !important; }
+            .verge-card { min-width: 100% !important; height: auto !important; min-height: 400px; padding: 2rem !important; }
             .about-grid { grid-template-columns: 1fr; }
             .about-title { font-size: 4rem; }
             .projects { grid-template-columns: 1fr; }
@@ -393,14 +389,14 @@
             .project-title { font-size: 3rem; }
             .nav-links { display: none; }
             .system-stats { grid-template-columns: 1fr 1fr; }
-            .cursor { display: none; } /* Hide custom cursor on mobile */
+            .cursor { display: none; } 
             * { cursor: auto !important; }
         }
     </style>
 </head>
 <body>
 
-    <div id="loader">CALIBRATING_100K_ARRAYS_DRIFTING ///</div>
+    <div id="loader">CALIBRATING_BLOOM_ENGINE ///</div>
 
     <canvas id="webgl-particles-bg"></canvas>
     <canvas id="webgl-cards-bg"></canvas>
@@ -432,41 +428,35 @@
         </div>
     </section>
 
-    <!-- Project Sections -->
     <div class="sticky-wrapper" id="stack">
         <div class="sticky-container">
             <div class="horizontal-content" id="horizontal-track">
-                
                 <div class="verge-card hover-target" data-terminal="true">
                     <span class="verge-tag">MODULE_01</span>
                     <h3 data-text="WEBGL_2.0"></h3>
                     <p data-text="SHADERS, FRAGMENT LOGIC, AND GPGPU COMPUTATION FOR HIGH-PERFORMANCE FLUID SIMULATIONS AND PARTICLE RENDERERS."></p>
                 </div>
-
+                <!-- ... other cards ... -->
                 <div class="verge-card hover-target" data-terminal="true">
                     <span class="verge-tag">MODULE_02</span>
                     <h3 data-text="REACT_CORE"></h3>
                     <p data-text="BUILDING SCALABLE COMPONENT ARCHITECTURES FOR ENTERPRISE-GRADE SYSTEMS WITH A FOCUS ON RENDER OPTIMIZATION."></p>
                 </div>
-
                 <div class="verge-card hover-target" data-terminal="true">
                     <span class="verge-tag">MODULE_03</span>
                     <h3 data-text="TYPESCRIPT"></h3>
                     <p data-text="IMPLEMENTING RIGID TYPE-SAFE DEVELOPMENT PIPELINES TO ENSURE TOTAL SYSTEM INTEGRITY AND SCALABILITY."></p>
                 </div>
-
                 <div class="verge-card hover-target" data-terminal="true">
                     <span class="verge-tag">MODULE_04</span>
                     <h3 data-text="GLSL_OPS"></h3>
                     <p data-text="CUSTOM GRAPHICS PIPELINES WRITTEN IN PURE C-LIKE SHADING LANGUAGE TO BYPASS STANDARD CSS LIMITATIONS."></p>
                 </div>
-
                 <div class="verge-card hover-target" data-terminal="true">
                     <span class="verge-tag">MODULE_05</span>
                     <h3 data-text="UI_BRUTALISM"></h3>
                     <p data-text="CHALLENGING MODERN ACCESSIBILITY STANDARDS WITH AGGRESSIVE TYPOGRAPHY AND HIGH-CONTRAST INTERFACES."></p>
                 </div>
-
             </div>
         </div>
     </div>
@@ -474,22 +464,10 @@
     <section class="lab-section" id="lab">
         <h2 class="glitch-text hover-target reveal" style="font-size: 6rem;">THE_LAB</h2>
         <div class="lab-grid">
-            <div class="lab-item hover-target reveal">
-                <span>01 // GEOMETRY</span>
-                <h4>SDF_EXPLORER</h4>
-            </div>
-            <div class="lab-item hover-target reveal">
-                <span>02 // PHYSICS</span>
-                <h4>FLUID_DYN_04</h4>
-            </div>
-            <div class="lab-item hover-target reveal">
-                <span>03 // AUDIO</span>
-                <h4>FFT_VISUALIZER</h4>
-            </div>
-            <div class="lab-item hover-target reveal">
-                <span>04 // AI</span>
-                <h4>NEURAL_MESH</h4>
-            </div>
+            <div class="lab-item hover-target reveal"><span>01 // GEOMETRY</span><h4>SDF_EXPLORER</h4></div>
+            <div class="lab-item hover-target reveal"><span>02 // PHYSICS</span><h4>FLUID_DYN_04</h4></div>
+            <div class="lab-item hover-target reveal"><span>03 // AUDIO</span><h4>FFT_VISUALIZER</h4></div>
+            <div class="lab-item hover-target reveal"><span>04 // AI</span><h4>NEURAL_MESH</h4></div>
         </div>
     </section>
 
@@ -530,7 +508,7 @@
     </section>
 
     <footer class="footer" id="contact">
-        <h1 class="glitch-text hover-target reveal" data-text="GET_IN_TOUCH">GET_IN_TOUCH</h1>
+        <h1 class="glitch-text hover-target reveal">GET_IN_TOUCH</h1>
         <div style="margin-top: 4rem;" class="reveal">
             <a href="mailto:donald@artello.dev" class="brutal-btn hover-target glass-target">ESTABLISH_CONNECTION ///</a>
         </div>
@@ -544,238 +522,160 @@
     </div>
 
     <script>
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const loader = document.getElementById('loader');
-                loader.style.opacity = '0';
-                setTimeout(() => loader.style.visibility = 'hidden', 800);
-            }, 1200); 
-        });
+        window.addEventListener('load', () => { setTimeout(() => { const l = document.getElementById('loader'); l.style.opacity = '0'; setTimeout(() => l.style.visibility = 'hidden', 800); }, 1200); });
 
-        // --- Layout Caching (Anti-Lag) ---
         let glassElements = [];
         let cardRects = new Float32Array(80); 
-        
         function updateGlassRects() {
             glassElements = document.querySelectorAll('.glass-target, .verge-card, .lab-item');
             const h = window.innerHeight;
             for(let i=0; i<20; i++) {
                 if(i < glassElements.length) {
                     const r = glassElements[i].getBoundingClientRect();
-                    cardRects[i*4] = r.left;
-                    cardRects[i*4+1] = h - r.bottom;
-                    cardRects[i*4+2] = r.width;
-                    cardRects[i*4+3] = r.height;
+                    cardRects[i*4] = r.left; cardRects[i*4+1] = h - r.bottom; cardRects[i*4+2] = r.width; cardRects[i*4+3] = r.height;
                 } else { cardRects[i*4] = -2000; }
             }
         }
 
         const stickyWrapper = document.querySelector('.sticky-wrapper');
         const horizontalTrack = document.getElementById('horizontal-track');
-        let currentTranslate = 0;
-
         function syncScroll() {
             if (window.innerWidth > 768) {
                 const rect = stickyWrapper.getBoundingClientRect();
-                const viewHeight = window.innerHeight;
-                if (rect.top <= 0 && rect.bottom >= viewHeight) {
-                    const totalScrollable = rect.height - viewHeight;
-                    const percentage = Math.abs(rect.top) / totalScrollable;
-                    const maxTranslate = horizontalTrack.offsetWidth - window.innerWidth;
-                    currentTranslate = percentage * maxTranslate;
-                    horizontalTrack.style.transform = `translateX(-${currentTranslate}px)`;
+                if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
+                    const percentage = Math.abs(rect.top) / (rect.height - window.innerHeight);
+                    horizontalTrack.style.transform = `translateX(-${percentage * (horizontalTrack.offsetWidth - window.innerWidth)}px)`;
                 }
-            } else {
-                horizontalTrack.style.transform = 'none';
-            }
+            } else { horizontalTrack.style.transform = 'none'; }
             updateGlassRects();
         }
-
         window.addEventListener('scroll', () => { requestAnimationFrame(syncScroll); }, { passive: true });
         window.addEventListener('resize', updateGlassRects);
-        updateGlassRects();
 
         async function typeWriter(element, text, speed = 30) {
-            element.innerHTML = '';
-            element.classList.add('terminal-cursor');
-            for (let i = 0; i < text.length; i++) {
-                element.innerHTML += text.charAt(i);
-                await new Promise(resolve => setTimeout(resolve, speed));
-            }
+            element.innerHTML = ''; element.classList.add('terminal-cursor');
+            for (let i = 0; i < text.length; i++) { element.innerHTML += text.charAt(i); await new Promise(r => setTimeout(r, speed)); }
             element.classList.remove('terminal-cursor');
         }
 
         async function triggerStackTerminal(item) {
             if (item.dataset.animated === "true") return;
             item.dataset.animated = "true";
-            const h3 = item.querySelector('h3');
-            const p = item.querySelector('p');
+            const h3 = item.querySelector('h3'), p = item.querySelector('p');
             if(h3) await typeWriter(h3, h3.dataset.text, 50);
             if(p) await typeWriter(p, p.dataset.text, 15);
         }
 
-        const observerOptions = { threshold: 0.1 };
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    if (entry.target.dataset.terminal === "true") triggerStackTerminal(entry.target);
-                } 
-            });
-        }, observerOptions);
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); if (entry.target.dataset.terminal === "true") triggerStackTerminal(entry.target); } });
+        }, { threshold: 0.1 });
         document.querySelectorAll('.reveal, .verge-card').forEach(el => observer.observe(el));
 
         const cursor = document.getElementById('cursor');
-        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX; mouseY = e.clientY;
-            if (cursor) { cursor.style.left = mouseX + 'px'; cursor.style.top = mouseY + 'px'; }
-        }, { passive: true });
-
+        let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
+        document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; if (cursor) { cursor.style.left = mouseX + 'px'; cursor.style.top = mouseY + 'px'; } }, { passive: true });
         document.querySelectorAll('.hover-target').forEach(t => {
             t.addEventListener('mouseenter', () => { if(cursor) { cursor.style.width = '60px'; cursor.style.height = '60px'; } });
             t.addEventListener('mouseleave', () => { if(cursor) { cursor.style.width = '20px'; cursor.style.height = '20px'; } });
         });
 
-        // --- GLITCH TEXT ORIGINAL TILT ---
         document.querySelectorAll('.glitch-text').forEach(el => {
-            const html = el.innerHTML;
-            el.innerHTML = '';
-            // Split by characters but keep <br> tags intact
+            const html = el.innerHTML; el.innerHTML = '';
             const parts = html.split(/(<br.*?>)/gi);
             parts.forEach(part => {
-                if (part.toLowerCase().startsWith('<br')) {
-                    el.appendChild(document.createElement('br'));
-                } else {
+                if (part.toLowerCase().startsWith('<br')) { el.appendChild(document.createElement('br')); }
+                else {
                     [...part].forEach(char => {
-                        const span = document.createElement('span');
-                        span.innerText = char === ' ' ? '\u00A0' : char;
-                        span.className = 'letter';
-                        el.appendChild(span);
+                        const span = document.createElement('span'); span.innerText = char === ' ' ? '\u00A0' : char; span.className = 'letter'; el.appendChild(span);
                         span.addEventListener('mouseenter', () => {
-                            const x = (Math.random() - 0.5) * 100, y = (Math.random() - 0.5) * 100, r = (Math.random() - 0.5) * 60;
-                            span.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg) scale(1.5)`;
-                            span.style.color = 'var(--neon)'; 
+                            const x = (Math.random()-0.5)*100, y = (Math.random()-0.5)*100, r = (Math.random()-0.5)*60;
+                            span.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg) scale(1.5)`; span.style.color = 'var(--neon)';
                         });
-                        span.addEventListener('mouseleave', () => {
-                            setTimeout(() => { span.style.transform = ''; span.style.color = ''; }, 400);
-                        });
+                        span.addEventListener('mouseleave', () => { setTimeout(() => { span.style.transform = ''; span.style.color = ''; }, 400); });
                     });
                 }
             });
         });
 
-        function createShader(gl, type, src) {
-            const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s;
-        }
-
-        // --- WEBGL: 100K DRIFTING PARTICLES ---
-        const partCanvas = document.getElementById('webgl-particles-bg');
-        const glP = partCanvas.getContext('webgl', { alpha: true });
-        const pProg = glP.createProgram();
+        const partCanvas = document.getElementById('webgl-particles-bg'), glP = partCanvas.getContext('webgl', { alpha: true });
         const pVS = `
             attribute vec3 a_pos; attribute float a_id;
             uniform vec2 u_res; uniform float u_time; uniform vec2 u_mouse;
-            varying float v_alpha;
+            varying float v_alpha; varying vec2 v_pos;
             void main() {
                 vec3 pos = a_pos;
-                // Continuous drifting motion (wraps around u_res)
-                float driftX = u_time * 40.0 + a_id * 0.1;
+                float driftX = u_time * 60.0 + a_id * 0.1;
                 pos.x = mod(pos.x + driftX + u_res.x * 2.0, u_res.x * 4.0) - u_res.x * 2.0;
-                
-                pos.y += sin(u_time * 0.002 + a_id) * 100.0;
-                
+                pos.y += sin(u_time * 0.003 + a_id) * 150.0;
                 vec2 screen = pos.xy + (u_res * 0.5);
                 float dist = distance(screen, u_mouse);
-                if(dist < 300.0) pos.xy += normalize(screen - u_mouse) * (300.0 - dist) * 0.5;
-                
+                if(dist < 350.0) pos.xy += normalize(screen - u_mouse) * (350.0 - dist) * 0.6;
                 float p = 1200.0 / (1200.0 - pos.z);
-                gl_PointSize = (window.innerWidth < 768.0 ? 1.0 : 1.6) * p;
+                gl_PointSize = (u_res.x < 768.0 ? 2.5 : 4.5) * p;
                 gl_Position = vec4(((pos.xy * p + u_res * 0.5) / u_res) * 2.0 - 1.0, pos.z / 2000.0, 1.0);
-                v_alpha = 0.2 + 0.4 * sin(u_time * 0.005 + a_id);
+                v_alpha = 0.3 + 0.5 * sin(u_time * 0.006 + a_id);
+                v_pos = gl_Position.xy;
             }
         `;
-        const pFS = `precision highp float; varying float v_alpha; void main() { gl_FragColor = vec4(0.8, 1.0, 0.0, v_alpha); }`;
-        glP.attachShader(pProg, createShader(glP, glP.VERTEX_SHADER, pVS));
-        glP.attachShader(pProg, createShader(glP, glP.FRAGMENT_SHADER, pFS));
-        glP.linkProgram(pProg);
-
-        const pCount = 100000;
-        const pDat = new Float32Array(pCount * 3), pIds = new Float32Array(pCount);
-        for(let i=0; i<pCount; i++) {
-            pDat[i*3] = (Math.random()-0.5)*window.innerWidth*4.0; 
-            pDat[i*3+1] = (Math.random()-0.5)*window.innerHeight*25; 
-            pDat[i*3+2] = (Math.random()-0.5)*1800;
-            pIds[i] = Math.random()*3000;
+        const pFS = `
+            precision highp float;
+            varying float v_alpha; varying vec2 v_pos;
+            void main() {
+                vec2 uv = gl_PointCoord - 0.5;
+                float r = length(uv);
+                if(r > 0.5) discard;
+                
+                // Chromatic Aberration logic
+                float shift = length(v_pos) * 0.08;
+                float rR = length(uv + vec2(shift, 0.0));
+                float rG = length(uv);
+                float rB = length(uv - vec2(shift, 0.0));
+                
+                float core = pow(1.0 - r * 2.0, 4.0);
+                float bloomR = pow(max(0.0, 1.0 - rR * 2.0), 2.0);
+                float bloomG = pow(max(0.0, 1.0 - rG * 2.0), 2.0);
+                float bloomB = pow(max(0.0, 1.0 - rB * 2.0), 2.0);
+                
+                vec3 color = vec3(bloomR * 0.9, bloomG * 1.0, bloomB * 0.6);
+                gl_FragColor = vec4(color, v_alpha * (core + bloomG * 0.4));
+            }
+        `;
+        function createProg(gl, vsS, fsS) {
+            const p = gl.createProgram();
+            const s = (t, src) => { const s = gl.createShader(t); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+            const vs = s(gl.VERTEX_SHADER, vsS), fs = s(gl.FRAGMENT_SHADER, fsS);
+            gl.attachShader(p, vs); gl.attachShader(p, fs); gl.linkProgram(p); return p;
         }
-        const setBuf = (gl, prg, name, dat, sz) => {
-            const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, dat, gl.STATIC_DRAW);
-            const l = gl.getAttribLocation(prg, name); gl.enableVertexAttribArray(l); gl.vertexAttribPointer(l, sz, gl.FLOAT, false, 0, 0);
-        };
-        glP.useProgram(pProg); setBuf(glP, pProg, 'a_pos', pDat, 3); setBuf(glP, pProg, 'a_id', pIds, 1);
+        const pProg = createProg(glP, pVS, pFS); glP.useProgram(pProg);
+        const pCount = 100000, pDat = new Float32Array(pCount * 3), pIds = new Float32Array(pCount);
+        for(let i=0; i<pCount; i++) { pDat[i*3] = (Math.random()-0.5)*window.innerWidth*4.0; pDat[i*3+1] = (Math.random()-0.5)*window.innerHeight*25; pDat[i*3+2] = (Math.random()-0.5)*1800; pIds[i] = Math.random()*3000; }
+        const b = (gl, prg, name, dat, sz) => { const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, dat, gl.STATIC_DRAW); const l = gl.getAttribLocation(prg, name); gl.enableVertexAttribArray(l); gl.vertexAttribPointer(l, sz, gl.FLOAT, false, 0, 0); };
+        b(glP, pProg, 'a_pos', pDat, 3); b(glP, pProg, 'a_id', pIds, 1);
         glP.enable(glP.BLEND); glP.blendFunc(glP.SRC_ALPHA, glP.ONE);
-
         const uLocP = { res: glP.getUniformLocation(pProg, 'u_res'), mouse: glP.getUniformLocation(pProg, 'u_mouse'), time: glP.getUniformLocation(pProg, 'u_time') };
 
-        const cardsCanvas = document.getElementById('webgl-cards-bg');
-        const glC = cardsCanvas.getContext('webgl', { alpha: true });
-        const cProg = glC.createProgram();
+        const glC = document.getElementById('webgl-cards-bg').getContext('webgl', { alpha: true });
         const cFS = `
-            precision highp float;
-            uniform vec2 u_res; uniform float u_time; uniform vec4 u_cards[20]; uniform int u_num;
+            precision highp float; uniform vec2 u_res; uniform float u_time; uniform vec4 u_cards[20]; uniform int u_num;
             float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
-            float noise(vec2 p) {
-                vec2 i = floor(p), f = fract(p);
-                vec2 u = f*f*(3.0-2.0*f);
-                return mix(mix(hash(i+vec2(0,0)), hash(i+vec2(1,0)), u.x),
-                           mix(hash(i+vec2(0,1)), hash(i+vec2(1,1)), u.x), u.y);
-            }
             void main() {
                 vec2 f = gl_FragCoord.xy; bool isG = false;
-                for(int i=0; i<20; i++) {
-                    if(i >= u_num) break;
-                    vec4 b = u_cards[i];
-                    if(f.x > b.x && f.x < b.x+b.z && f.y > b.y && f.y < b.y+b.w) { isG = true; break; }
-                }
+                for(int i=0; i<20; i++) { if(i >= u_num) break; vec4 b = u_cards[i]; if(f.x > b.x && f.x < b.x+b.z && f.y > b.y && f.y < b.y+b.w) { isG = true; break; } }
                 if(!isG) discard;
-                vec2 uv = f / u_res;
-                float alpha = 0.05 + 0.03 * noise(uv * 4.0 + u_time * 0.2);
-                gl_FragColor = vec4(0.8, 1.0, 0.0, alpha); 
+                gl_FragColor = vec4(0.8, 1.0, 0.0, 0.05 + 0.03 * hash(f/u_res + u_time*0.01));
             }
         `;
-        glC.attachShader(cProg, createShader(glC, glC.VERTEX_SHADER, `attribute vec2 a_p; void main() { gl_Position = vec4(a_p, 0.0, 1.0); }`));
-        glC.attachShader(cProg, createShader(glC, glC.FRAGMENT_SHADER, cFS));
-        glC.linkProgram(cProg);
-        glC.useProgram(cProg); setBuf(glC, cProg, 'a_p', new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), 2);
-
+        const cProg = createProg(glC, `attribute vec2 a_p; void main() { gl_Position = vec4(a_p, 0.0, 1.0); }`, cFS); glC.useProgram(cProg);
+        const bC = glC.createBuffer(); glC.bindBuffer(glC.ARRAY_BUFFER, bC); glC.bufferData(glC.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), glC.STATIC_DRAW);
+        const lC = glC.getAttribLocation(cProg, 'a_p'); glC.enableVertexAttribArray(lC); glC.vertexAttribPointer(lC, 2, glC.FLOAT, false, 0, 0);
         const uLocC = { res: glC.getUniformLocation(cProg, 'u_res'), time: glC.getUniformLocation(cProg, 'u_time'), cards: glC.getUniformLocation(cProg, 'u_cards'), num: glC.getUniformLocation(cProg, 'u_num') };
 
         const start = Date.now();
         function draw() {
-            const t = (Date.now() - start) * 0.001;
-            
-            if(partCanvas.width !== window.innerWidth) {
-                partCanvas.width = cardsCanvas.width = window.innerWidth;
-                partCanvas.height = cardsCanvas.height = window.innerHeight;
-                glP.viewport(0,0,partCanvas.width,partCanvas.height);
-                glC.viewport(0,0,partCanvas.width,partCanvas.height);
-                updateGlassRects();
-            }
-
-            glP.clear(glP.COLOR_BUFFER_BIT); glP.useProgram(pProg);
-            glP.uniform2f(uLocP.res, partCanvas.width, partCanvas.height);
-            glP.uniform2f(uLocP.mouse, mouseX, mouseY);
-            glP.uniform1f(uLocP.time, t);
-            glP.drawArrays(glP.POINTS, 0, pCount);
-
-            glC.clear(glC.COLOR_BUFFER_BIT); glC.useProgram(cProg);
-            glC.uniform2f(uLocC.res, cardsCanvas.width, cardsCanvas.height);
-            glC.uniform1f(uLocC.time, t);
-            glC.uniform4fv(uLocC.cards, cardRects);
-            glC.uniform1i(uLocC.num, Math.min(glassElements.length, 20));
-            glC.drawArrays(glC.TRIANGLES, 0, 6);
-
+            const t = (Date.now()-start)*0.001;
+            if(partCanvas.width !== window.innerWidth) { partCanvas.width = glC.canvas.width = window.innerWidth; partCanvas.height = glC.canvas.height = window.innerHeight; glP.viewport(0,0,partCanvas.width,partCanvas.height); glC.viewport(0,0,partCanvas.width,partCanvas.height); updateGlassRects(); }
+            glP.clear(glP.COLOR_BUFFER_BIT); glP.uniform2f(uLocP.res, partCanvas.width, partCanvas.height); glP.uniform2f(uLocP.mouse, mouseX, mouseY); glP.uniform1f(uLocP.time, t); glP.drawArrays(glP.POINTS, 0, pCount);
+            glC.clear(glC.COLOR_BUFFER_BIT); glC.uniform2f(uLocC.res, glC.canvas.width, glC.canvas.height); glC.uniform1f(uLocC.time, t); glC.uniform4fv(uLocC.cards, cardRects); glC.uniform1i(uLocC.num, Math.min(glassElements.length, 20)); glC.drawArrays(glC.TRIANGLES, 0, 6);
             requestAnimationFrame(draw);
         }
         draw();
