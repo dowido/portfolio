@@ -313,12 +313,12 @@
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         /* LAB GALLERY */
-        .lab-section { padding: 10rem 2rem; border-bottom: 1px solid var(--grey); }
-        .lab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; margin-top: 4rem; }
+        .lab-section { padding: 8rem 1.5rem; border-bottom: 1px solid var(--grey); }
+        .lab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 4rem; }
         .lab-item {
             aspect-ratio: 1;
             border: 2px solid var(--grey);
-            padding: 3rem;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
@@ -373,6 +373,11 @@
             .sticky-wrapper { height: 350vh; } 
             .verge-card { min-width: 85vw; height: 60vh; padding: 2.5rem; box-shadow: 10px 10px 0px var(--bg); }
             .verge-card h3 { font-size: 2.8rem; }
+            .lab-section { padding: 6rem 1.5rem; }
+            .lab-grid { grid-template-columns: 1fr; }
+            .lab-item { padding: 1.5rem; aspect-ratio: 1.2; }
+            .lab-item h4 { font-size: 1.8rem; }
+            
             .about-grid { grid-template-columns: 1fr; gap: 2rem; }
             .projects { grid-template-columns: 1fr; }
             .project-card { padding: 4rem 1.5rem; min-height: 350px; }
