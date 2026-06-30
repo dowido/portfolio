@@ -384,9 +384,68 @@
             .cursor { display: none; } 
             * { cursor: auto !important; }
         }
+
+        /* ── Scroll Progress Bar ─────────────────────────────────── */
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: var(--neon); z-index: 10002;
+            transition: width 0.08s linear;
+            pointer-events: none;
+        }
+
+        /* ── Magnetic Button smooth return ───────────────────────── */
+        .brutal-btn { transition: transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275), background 0.2s, color 0.2s, box-shadow 0.4s; }
+
+        /* ── 3D Card Tilt ────────────────────────────────────────── */
+        .project-card { transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.4s; transform-style: preserve-3d; will-change: transform; }
+        .project-card:hover { background: #0a0a0a; }
+
+        /* ── Glitch Flicker keyframes ────────────────────────────── */
+        @keyframes glitch-flash {
+            0%,100% { transform: none; text-shadow: none; }
+            15% { transform: skewX(-10deg) translateX(-6px); text-shadow: 4px 0 #ff003c, -4px 0 #00fff9; }
+            30% { transform: skewX(7deg) translateX(6px); text-shadow: -4px 0 #ff003c, 4px 0 #00fff9; }
+            45% { transform: translateX(-3px) scaleX(1.02); text-shadow: 3px 0 var(--neon); }
+            60% { transform: translateX(3px); }
+            75% { transform: none; text-shadow: none; }
+        }
+        .hero-glitch-active { animation: glitch-flash 0.35s ease forwards; }
+
+        /* ── Text Scramble colour ────────────────────────────────── */
+        .scramble-char { color: var(--neon); opacity: 0.5; }
+
+        /* ── Split-word reveal ───────────────────────────────────── */
+        .word-wrap { overflow: hidden; display: inline-block; }
+        .word-inner { display: inline-block; transform: translateY(110%); opacity: 0;
+            transition: transform 0.7s cubic-bezier(0.16,1,0.3,1), opacity 0.7s ease; }
+        .word-inner.revealed { transform: translateY(0); opacity: 1; }
+
+        /* ── Stat counters ───────────────────────────────────────── */
+        .about-stats {
+            display: flex; gap: 2.5rem; margin-top: 2.5rem; flex-wrap: wrap;
+        }
+        .about-stat { display: flex; flex-direction: column; align-items: flex-start; }
+        .about-stat-num {
+            font-family: 'Anton', sans-serif; font-size: 4rem; color: #000;
+            line-height: 1; letter-spacing: 2px;
+        }
+        .about-stat-label {
+            font-size: 0.6rem; letter-spacing: 4px; color: #555; margin-top: 0.2rem;
+        }
+
+        /* ── Cursor particle trail ───────────────────────────────── */
+        #trail-container { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9998; overflow:hidden; }
+        .trail-dot {
+            position: absolute; border-radius: 50%; background: var(--neon);
+            pointer-events: none; transform: translate(-50%,-50%) scale(1);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
     </style>
 </head>
 <body>
+
+    <div id="scroll-progress"></div>
+    <div id="trail-container"></div>
 
     <div id="loader">DEPLOYING_MOBILE_CORE ///</div>
 
@@ -425,7 +484,7 @@
         <h1 class="glitch-text hover-target reveal">OWIDO</h1>
         
         <div class="hero-sub reveal">
-            <p class="hero-desc">FULL-STACK WEB &amp; NATIVE ANDROID DEVELOPER. BACKEND ARCHITECT, REACT FRONTEND ENGINEER &amp; JETPACK COMPOSE SPECIALIST. BASED IN NJORO, NAKURU, KENYA.</p>
+            <p class="hero-desc split-words">FULL-STACK WEB &amp; NATIVE ANDROID DEVELOPER. BACKEND ARCHITECT, REACT FRONTEND ENGINEER &amp; JETPACK COMPOSE SPECIALIST. BASED IN NJORO, NAKURU, KENYA.</p>
             <a href="#work" class="brutal-btn hover-target glass-target">VIEW WORK ///</a>
         </div>
     </section>
@@ -540,14 +599,20 @@
                 <p class="about-text">
                     THIRD-YEAR COMPUTER SCIENCE STUDENT AT EGERTON UNIVERSITY, NJORO. I BUILD ROBUST BACKEND SYSTEMS, RESPONSIVE REACT INTERFACES AND NATIVE ANDROID APPS WITH JETPACK COMPOSE.
                     <br><br>
-                    WHEN I'M NOT PUSHING COMMITS, I'M COMPETING AT HACKATHONS ACROSS KENYA — 4 EVENTS IN THE LAST YEAR ALONE.
+                    WHEN I'M NOT PUSHING COMMITS, I'M COMPETING AT HACKATHONS ACROSS KENYA &mdash; 4 EVENTS IN THE LAST YEAR ALONE.
                     <br><br>
                     BSC. COMPUTER SCIENCE &mdash; EGERTON UNIVERSITY (2023&ndash;PRESENT)<br>
                     MASENO SCHOOL, KISUMU (2019&ndash;2022)
                 </p>
-                <div style="margin-top: 3rem; display:flex; gap:1rem; flex-wrap:wrap;">
-                    <a href="mailto:doncool933@gmail.com" class="brutal-btn hover-target" style="box-shadow: 6px 6px 0px #000; border-color: #000; color: #000;">EMAIL ///</a>
-                    <a href="https://github.com/dowido" target="_blank" class="brutal-btn hover-target" style="box-shadow: 6px 6px 0px #000; border-color: #000; color: #000;">GITHUB ///</a>
+                <div class="about-stats" id="about-stats">
+                    <div class="about-stat"><span class="about-stat-num" data-target="4">0</span><span class="about-stat-label">HACKATHONS</span></div>
+                    <div class="about-stat"><span class="about-stat-num" data-target="3">0</span><span class="about-stat-label">YEARS CS</span></div>
+                    <div class="about-stat"><span class="about-stat-num" data-target="3">0</span><span class="about-stat-label">PROJECTS</span></div>
+                    <div class="about-stat"><span class="about-stat-num" data-target="7">0</span><span class="about-stat-label">TECH STACKS</span></div>
+                </div>
+                <div style="margin-top: 2rem; display:flex; gap:1rem; flex-wrap:wrap;">
+                    <a href="mailto:doncool933@gmail.com" class="brutal-btn hover-target" style="box-shadow: 6px 6px 0px var(--neon); border-color: var(--neon); color: var(--bg); background: var(--neon);">EMAIL ///</a>
+                    <a href="https://github.com/dowido" target="_blank" class="brutal-btn hover-target" style="box-shadow: 6px 6px 0px var(--neon); border-color: var(--neon); color: var(--neon); background: transparent;">GITHUB ///</a>
                 </div>
             </div>
         </div>
@@ -567,7 +632,7 @@
         <div>STACK: DJANGO / REACT / KOTLIN</div>
         <div>LOCATION: NJORO, NAKURU KE</div>
         <div>EMAIL: DONCOOL933@GMAIL.COM</div>
-        <div>GITHUB: GITHUB.COM/DOWIDO</div>
+        <div>NBI &mdash; <span id="live-clock">--:--:--</span></div>
     </div>
 
     <script>
@@ -850,6 +915,171 @@
             requestAnimationFrame(draw);
         }
         draw();
+
+        // ════════════════════════════════════════════════════════════════════
+        // VISUAL CANDY
+        // ════════════════════════════════════════════════════════════════════
+
+        // ── 1. SCROLL PROGRESS BAR ────────────────────────────────────────
+        const scrollProgressEl = document.getElementById('scroll-progress');
+        window.addEventListener('scroll', function() {
+            const scrolled = window.scrollY;
+            const total = document.documentElement.scrollHeight - window.innerHeight;
+            scrollProgressEl.style.width = (total > 0 ? scrolled / total * 100 : 0) + '%';
+        }, { passive: true });
+
+        // ── 2. CURSOR PARTICLE TRAIL ──────────────────────────────────────
+        const trailContainer = document.getElementById('trail-container');
+        let lastTrail = 0;
+        document.addEventListener('mousemove', function(e) {
+            const now = Date.now();
+            if (now - lastTrail < 35) return;
+            lastTrail = now;
+            const dot = document.createElement('div');
+            const sz = Math.random() * 5 + 3;
+            dot.className = 'trail-dot';
+            dot.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;width:${sz}px;height:${sz}px;opacity:0.75;`;
+            trailContainer.appendChild(dot);
+            requestAnimationFrame(() => {
+                dot.style.opacity = '0';
+                dot.style.transform = `translate(-50%,-50%) translate(${(Math.random()-0.5)*24}px,${-Math.random()*24-8}px) scale(0.1)`;
+            });
+            setTimeout(() => dot.remove(), 750);
+        }, { passive: true });
+
+        // ── 3. MAGNETIC BUTTONS ───────────────────────────────────────────
+        document.querySelectorAll('.brutal-btn').forEach(function(btn) {
+            btn.addEventListener('mousemove', function(e) {
+                const r = btn.getBoundingClientRect();
+                const x = (e.clientX - r.left - r.width  / 2) * 0.28;
+                const y = (e.clientY - r.top  - r.height / 2) * 0.28;
+                btn.style.transition = 'transform 0.1s ease, background 0.2s, color 0.2s, box-shadow 0.4s';
+                btn.style.transform = `translate(${x}px,${y}px)`;
+            });
+            btn.addEventListener('mouseleave', function() {
+                btn.style.transition = 'transform 0.5s cubic-bezier(0.175,0.885,0.32,1.275), background 0.2s, color 0.2s, box-shadow 0.4s';
+                btn.style.transform = '';
+            });
+        });
+
+        // ── 4. 3D CARD TILT ───────────────────────────────────────────────
+        document.querySelectorAll('.project-card').forEach(function(card) {
+            card.addEventListener('mousemove', function(e) {
+                const r = card.getBoundingClientRect();
+                const x = (e.clientX - r.left)  / r.width  - 0.5;  // -0.5 to 0.5
+                const y = (e.clientY - r.top)   / r.height - 0.5;
+                card.style.transform = `perspective(900px) rotateY(${x*16}deg) rotateX(${-y*16}deg) translateZ(12px) scale(1.02)`;
+                card.style.boxShadow = `${-x*30}px ${-y*20}px 50px rgba(0,0,0,0.6), 0 0 30px rgba(204,255,0,0.08)`;
+                card.style.transition = 'transform 0.08s ease, box-shadow 0.08s ease';
+            });
+            card.addEventListener('mouseleave', function() {
+                card.style.transition = 'transform 0.6s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.6s ease, background 0.4s';
+                card.style.transform = '';
+                card.style.boxShadow = '';
+            });
+        });
+
+        // ── 5. TEXT SCRAMBLE ──────────────────────────────────────────────
+        const CHARS = '!<>-_\/[]{}=+*^?#@ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        function scrambleEl(el) {
+            const target = el.dataset.scramble || el.innerText;
+            el.dataset.scramble = target;
+            let frame = 0;
+            const len = target.length;
+            const endFrames = Array.from({length: len}, () => Math.floor(Math.random() * 18) + 6);
+            (function tick() {
+                let out = '';
+                let done = 0;
+                for (let i = 0; i < len; i++) {
+                    if (frame >= endFrames[i]) { out += target[i]; done++; }
+                    else if (frame > endFrames[i] - 8) {
+                        out += `<span class="scramble-char">${CHARS[Math.floor(Math.random()*CHARS.length)]}</span>`;
+                    } else { out += target[i] === ' ' ? '&nbsp;' : target[i]; }
+                }
+                el.innerHTML = out;
+                frame++;
+                if (done < len) requestAnimationFrame(tick);
+            })();
+        }
+        // Observe section headings (h2 outside hero)
+        const scrambleObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(e) {
+                if (e.isIntersecting && !e.target.dataset.scrambled) {
+                    e.target.dataset.scrambled = '1';
+                    setTimeout(function() { scrambleEl(e.target); }, 120);
+                    scrambleObserver.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.6 });
+        document.querySelectorAll('.lab-section h2, .footer h1, .about-title').forEach(function(el) {
+            scrambleObserver.observe(el);
+        });
+
+        // ── 6. HERO GLITCH FLICKER ────────────────────────────────────────
+        document.querySelectorAll('.hero .glitch-text').forEach(function(el) {
+            function scheduleGlitch() {
+                setTimeout(function() {
+                    el.classList.add('hero-glitch-active');
+                    setTimeout(function() {
+                        el.classList.remove('hero-glitch-active');
+                        scheduleGlitch();
+                    }, 380);
+                }, Math.random() * 3500 + 1800);
+            }
+            scheduleGlitch();
+        });
+
+        // ── 7. SPLIT-WORD STAGGERED REVEAL (hero desc) ───────────────────
+        document.querySelectorAll('.split-words').forEach(function(el) {
+            const text = el.innerText;
+            el.innerHTML = text.split(' ').map(function(w, i) {
+                return `<span class="word-wrap"><span class="word-inner" style="transition-delay:${i * 40}ms">${w}</span></span>`;
+            }).join(' ');
+            const wordObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) {
+                        e.target.querySelectorAll('.word-inner').forEach(function(s) { s.classList.add('revealed'); });
+                        wordObserver.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+            wordObserver.observe(el);
+        });
+
+        // ── 8. ANIMATED STAT COUNTERS ─────────────────────────────────────
+        const statsSection = document.getElementById('about-stats');
+        if (statsSection) {
+            const statObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (!e.isIntersecting) return;
+                    statObserver.unobserve(e.target);
+                    e.target.querySelectorAll('.about-stat-num').forEach(function(num) {
+                        const target = parseInt(num.dataset.target, 10);
+                        let cur = 0;
+                        const step = Math.ceil(target / 40);
+                        const timer = setInterval(function() {
+                            cur = Math.min(cur + step, target);
+                            num.textContent = cur;
+                            if (cur >= target) { num.textContent = target + '+'; clearInterval(timer); }
+                        }, 45);
+                    });
+                });
+            }, { threshold: 0.5 });
+            statObserver.observe(statsSection);
+        }
+        // ── LIVE CLOCK (Nairobi, EAT) ─────────────────────────────────────
+        (function tickClock() {
+            const el = document.getElementById('live-clock');
+            if (el) {
+                el.textContent = new Date().toLocaleTimeString('en-KE', {
+                    timeZone: 'Africa/Nairobi',
+                    hour: '2-digit', minute: '2-digit', second: '2-digit',
+                    hour12: false
+                });
+            }
+            setTimeout(tickClock, 1000);
+        })();
+
     </script>
 </body>
 </html>
