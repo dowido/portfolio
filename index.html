@@ -601,110 +601,137 @@
         }
 
         // ── STACK SCROLL LOCK ──────────────────────────────────────────────
-        const stickyWrapper = document.querySelector('.sticky-wrapper');
+        // Strategy: lock the page at CSS level (overflow-y:hidden on <html>)
+        // the moment the section's top reaches the viewport. Wheel events drive
+        // the horizontal track. When all cards are seen (or user scrolls back past
+        // card 1), we unlock and programmatically jump past / before the section.
+        const stickyWrapper  = document.querySelector('.sticky-wrapper');
         const horizontalTrack = document.getElementById('horizontal-track');
         const stickyContainer = document.querySelector('.sticky-container');
 
-        let hTarget = 0;      // desired horizontal position (px)
-        let hCurrent = 0;     // animated horizontal position (px)
-        let hRafId = null;
+        let hTarget  = 0;   // desired horizontal scroll position (px)
+        let hCurrent = 0;   // smoothly animated position (px)
+        let hRafId   = null;
+        let stackLocked   = false;
+        let exitCooldown  = false; // brief pause after unlock to avoid re-locking
+        let sbWidth = 0;    // scrollbar width to compensate layout shift
+
+        // ── helpers ──────────────────────────────────────────────────────────
 
         function hMax() {
             return Math.max(0, horizontalTrack.scrollWidth - stickyContainer.clientWidth);
         }
 
-        function inStackZone() {
-            const r = stickyWrapper.getBoundingClientRect();
-            return r.top <= 0 && r.bottom >= window.innerHeight;
-        }
-
         // Smooth lerp render loop
-        function renderHoriz() {
-            const diff = hTarget - hCurrent;
-            if (Math.abs(diff) < 0.15) {
-                hCurrent = hTarget;
-                hRafId = null;
-            } else {
-                hCurrent += diff * 0.11;
-                hRafId = requestAnimationFrame(renderHoriz);
-            }
+        function renderH() {
+            const d = hTarget - hCurrent;
+            if (Math.abs(d) < 0.1) { hCurrent = hTarget; hRafId = null; }
+            else { hCurrent += d * 0.11; hRafId = requestAnimationFrame(renderH); }
             horizontalTrack.style.transform = `translateX(-${hCurrent}px)`;
             updateGlassRects();
         }
+        function kickR() { if (!hRafId) hRafId = requestAnimationFrame(renderH); }
 
-        function kickRender() {
-            if (!hRafId) hRafId = requestAnimationFrame(renderHoriz);
-        }
-
-        // Progress bar element (injected below sticky-container)
+        // Progress bar
         const progressBar = document.createElement('div');
-        progressBar.style.cssText = `
-            position: absolute; bottom: 0; left: 0;
-            height: 4px; width: 0%; background: #000;
-            transition: width 0.1s linear; z-index: 10;
-            pointer-events: none;
-        `;
+        progressBar.style.cssText = 'position:absolute;bottom:0;left:0;height:4px;width:0%;background:#000;z-index:10;pointer-events:none;';
         stickyContainer.style.position = 'relative';
         stickyContainer.appendChild(progressBar);
-
         function updateProgress() {
-            const max = hMax();
-            const pct = max > 0 ? (hTarget / max) * 100 : 0;
-            progressBar.style.width = pct + '%';
+            progressBar.style.width = (hMax() > 0 ? hTarget / hMax() * 100 : 0) + '%';
         }
 
-        // Wheel handler — blocks vertical scroll while horizontal remains
-        window.addEventListener('wheel', function(e) {
-            if (!inStackZone()) return;
+        // ── lock / unlock ─────────────────────────────────────────────────────
 
-            const delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
-            const max = hMax();
+        function lockStack() {
+            if (stackLocked) return;
+            stackLocked = true;
+            // Measure scrollbar before hiding it to prevent layout shift
+            sbWidth = window.innerWidth - document.documentElement.clientWidth;
+            document.documentElement.style.overflowY = 'hidden';
+            if (sbWidth > 0) document.documentElement.style.paddingRight = sbWidth + 'px';
+        }
 
-            if (delta > 0 && hTarget < max) {
-                // Cards not fully revealed — block vertical, advance horizontal
-                e.preventDefault();
-                hTarget = Math.min(max, hTarget + delta * 1.6);
-                kickRender();
-                updateProgress();
-            } else if (delta < 0 && hTarget > 0) {
-                // Scrolling back through cards
-                e.preventDefault();
-                hTarget = Math.max(0, hTarget + delta * 1.6);
-                kickRender();
-                updateProgress();
+        function unlockStack(jumpToY) {
+            if (!stackLocked) return;
+            stackLocked = false;
+            exitCooldown = true;
+            document.documentElement.style.overflowY = '';
+            document.documentElement.style.paddingRight = '';
+            // Jump to the correct position (past or before the section)
+            if (jumpToY != null) window.scrollTo({ top: jumpToY, behavior: 'smooth' });
+            // Cooldown prevents the scroll listener from immediately re-locking
+            setTimeout(function() { exitCooldown = false; }, 900);
+        }
+
+        // ── entry detection via scroll ────────────────────────────────────────
+        // Lock the moment the section's top edge crosses the viewport top.
+
+        window.addEventListener('scroll', function() {
+            if (stackLocked || exitCooldown) return;
+            const r = stickyWrapper.getBoundingClientRect();
+            // Section top has reached (or passed) viewport top AND is still visible
+            if (r.top <= 0 && r.bottom > window.innerHeight * 0.3) {
+                lockStack();
             }
-            // delta > 0 && hTarget >= max  → all cards seen, fall through to page scroll
-            // delta < 0 && hTarget <= 0    → at start, fall through to page scroll up
-        }, { passive: false });
-
-        // Touch support
-        let tStartY = 0;
-        document.addEventListener('touchstart', function(e) {
-            tStartY = e.touches[0].clientY;
         }, { passive: true });
 
-        document.addEventListener('touchmove', function(e) {
-            if (!inStackZone()) return;
-            const dy = tStartY - e.touches[0].clientY;
-            const max = hMax();
-            if (dy > 0 && hTarget < max) {
-                e.preventDefault();
-                hTarget = Math.min(max, hTarget + dy * 2.5);
-                tStartY = e.touches[0].clientY;
-                kickRender();
-                updateProgress();
-            } else if (dy < 0 && hTarget > 0) {
-                e.preventDefault();
-                hTarget = Math.max(0, hTarget + dy * 2.5);
-                tStartY = e.touches[0].clientY;
-                kickRender();
-                updateProgress();
+        // ── wheel: drives horizontal, unlocks when done ───────────────────────
+
+        window.addEventListener('wheel', function(e) {
+            if (!stackLocked) return;
+            e.preventDefault(); // extra safety on top of CSS lock
+
+            const delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+            const max   = hMax();
+
+            if (delta > 0) {
+                if (hTarget < max) {
+                    // Advance through cards
+                    hTarget = Math.min(max, hTarget + delta * 1.6);
+                    kickR();
+                    updateProgress();
+                } else {
+                    // All cards seen — unlock and jump to content after section
+                    unlockStack(stickyWrapper.offsetTop + stickyWrapper.offsetHeight);
+                }
+            } else if (delta < 0) {
+                if (hTarget > 0) {
+                    // Go back through cards
+                    hTarget = Math.max(0, hTarget + delta * 1.6);
+                    kickR();
+                    updateProgress();
+                } else {
+                    // Back at first card — unlock and jump to just before section
+                    unlockStack(stickyWrapper.offsetTop - 10);
+                }
             }
         }, { passive: false });
+
+        // ── touch ─────────────────────────────────────────────────────────────
+
+        let tY = 0;
+        document.addEventListener('touchstart', function(e) { tY = e.touches[0].clientY; }, { passive: true });
+        document.addEventListener('touchmove', function(e) {
+            if (!stackLocked) return;
+            e.preventDefault();
+            const dy  = tY - e.touches[0].clientY;
+            const max = hMax();
+            tY = e.touches[0].clientY;
+            if (dy > 0) {
+                if (hTarget < max) { hTarget = Math.min(max, hTarget + Math.abs(dy) * 2); kickR(); updateProgress(); }
+                else { unlockStack(stickyWrapper.offsetTop + stickyWrapper.offsetHeight); }
+            } else if (dy < 0) {
+                if (hTarget > 0) { hTarget = Math.max(0, hTarget - Math.abs(dy) * 2); kickR(); updateProgress(); }
+                else { unlockStack(stickyWrapper.offsetTop - 10); }
+            }
+        }, { passive: false });
+
+        // ── resize ────────────────────────────────────────────────────────────
 
         window.addEventListener('resize', function() {
             hTarget = Math.min(hTarget, hMax());
-            kickRender();
+            kickR();
             updateGlassRects();
         });
 
