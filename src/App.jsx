@@ -48,6 +48,56 @@ const fadeInUp = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
 };
 
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } }
+};
+
+const projects = [
+  {
+    id: "01",
+    role: "LEAD BACKEND DEV",
+    title: "FINTECH BUDGETING APP",
+    desc: "Engineered the backend architecture for a financial tracking application. Implemented core logic for financial data processing, M-Pesa API integration, and budgeting workflows.",
+    tags: ["Python", "Django", "MySQL", "M-Pesa API"],
+  },
+  {
+    id: "02",
+    role: "FULL-STACK DEV",
+    title: "MEDICAL QUEUE SYSTEM",
+    desc: "Developed a comprehensive queue management system using Java, JSP, and MySQL. Designed the database schema and implemented SQL triggers and session management to ensure data integrity.",
+    tags: ["Java", "JSP", "Servlets", "MySQL"],
+  },
+  {
+    id: "03",
+    role: "NETWORK ARCHITECT",
+    title: "UNIVERSITY INFRASTRUCTURE",
+    desc: "Designed a simulated network infrastructure for Egerton University utilizing Cisco Packet Tracer. Configured routing, switching, and subnets to model a scalable campus network.",
+    tags: ["Cisco Packet Tracer", "Networking", "Subnetting"],
+  },
+  {
+    id: "04",
+    role: "RESEARCH",
+    title: "AI IMAGE PROCESSING",
+    desc: "Academic research focused on optimizing AI-driven digital image processing algorithms for mobile environments — pushing performance boundaries on constrained hardware.",
+    tags: ["AI", "Mobile", "Image Processing", "Research"],
+  },
+];
+
+const skills = [
+  { category: "LANGUAGES & FRAMEWORKS", items: ["Python / Django", "Kotlin / Jetpack Compose", "Java / JSP / Servlets", "React"] },
+  { category: "DATABASES & CLOUD", items: ["MySQL", "Firebase"] },
+  { category: "APIS & INTEGRATIONS", items: ["M-Pesa API"] },
+  { category: "SYSTEM & TOOLS", items: ["ADB", "Cisco Packet Tracer", "Git / GitHub"] },
+];
+
+const hackathons = [
+  { name: "HACKERTON AI SUMMIT", date: "MARCH 2026" },
+  { name: "NJORO HACKATHON", date: "FEB 2026" },
+  { name: "VERCEL BUILDATHON NAKURU", date: "DEC 2025" },
+  { name: "AI HACKATHON KENYA", date: "NOV 2025" },
+];
+
 export default function App() {
   return (
     <>
@@ -69,79 +119,161 @@ export default function App() {
 
       {/* DOM Overlay - Scrolling normally */}
       <div className="scroll-content">
+        {/* ── NAV ── */}
         <nav>
-            <div className="logo">D.</div>
-            {/* Pure text navigation */}
-            <div className="nav-links">
-                <a href="#work">WORK</a>
-                <a href="#about">ABOUT</a>
-                <a href="#contact">CONTACT</a>
-            </div>
+          <div className="logo">D.</div>
+          <div className="nav-links">
+            <a href="#work">WORK</a>
+            <a href="#skills">SKILLS</a>
+            <a href="#about">ABOUT</a>
+            <a href="#hackathons">EVENTS</a>
+            <a href="#contact">CONTACT</a>
+          </div>
         </nav>
 
+        {/* ── HERO ── */}
         <section className="hero">
-            <motion.h1 
-                className="hero-text-huge"
-                initial="hidden"
-                animate="visible"
-                variants={fadeInUp}
-            >
-              DONATELLO
-            </motion.h1>
-            <motion.h1 
-                className="hero-text-huge"
-                initial="hidden"
-                animate="visible"
-                variants={fadeInUp}
-                transition={{ delay: 0.2 }}
-            >
-              CREATIVE DEV
-            </motion.h1>
-            
-            <motion.div 
-               className="hero-sub"
-               initial="hidden"
-               animate="visible"
-               variants={fadeInUp}
-               transition={{ delay: 0.4 }}
-            >
-                <p className="hero-desc">
-                  I build high-octane, over-engineered web experiences because standard templates are boring. Currently based in Nakuru.
-                </p>
-                <a href="#work" className="brutal-btn glass-target">INITIALIZE ///</a>
-            </motion.div>
+          <motion.p
+            className="hero-eyebrow"
+            initial="hidden"
+            animate="visible"
+            variants={fadeInUp}
+          >
+            DONALD AURTHUR OWIDO &nbsp;///&nbsp; NJORO, NAKURU COUNTY, KENYA
+          </motion.p>
+          <motion.h1 
+            className="hero-text-huge"
+            initial="hidden"
+            animate="visible"
+            variants={fadeInUp}
+          >
+            DONALD
+          </motion.h1>
+          <motion.h1 
+            className="hero-text-huge"
+            initial="hidden"
+            animate="visible"
+            variants={fadeInUp}
+            transition={{ delay: 0.2 }}
+          >
+            OWIDO
+          </motion.h1>
+          
+          <motion.div 
+             className="hero-sub"
+             initial="hidden"
+             animate="visible"
+             variants={fadeInUp}
+             transition={{ delay: 0.4 }}
+          >
+              <p className="hero-desc">
+                Driven CS student specializing in full-stack web &amp; native Android development.
+                I architect robust backends, design responsive React interfaces, and engineer
+                mobile solutions from the ground up with Jetpack Compose.
+              </p>
+              <div className="hero-cta-row">
+                <a href="#work" className="brutal-btn glass-target">VIEW WORK ///</a>
+                <a href="mailto:doncool933@gmail.com" className="brutal-btn brutal-btn--ghost glass-target">HIRE ME ///</a>
+              </div>
+          </motion.div>
         </section>
 
+        {/* ── MARQUEE ── */}
         <div className="marquee-container">
-            <div className="marquee-content">
-                /// FRONTEND DEVELOPMENT /// CREATIVE CODING /// WEBGL /// PERFORMANCE /// FRONTEND DEVELOPMENT /// CREATIVE CODING /// WEBGL /// PERFORMANCE ///
-            </div>
+          <div className="marquee-content">
+            /// FULL-STACK DEVELOPMENT /// ANDROID DEV /// JETPACK COMPOSE /// DJANGO /// REACT /// M-PESA API /// FIREBASE /// MYSQL /// FULL-STACK DEVELOPMENT /// ANDROID DEV /// JETPACK COMPOSE /// DJANGO /// REACT /// M-PESA API /// FIREBASE /// MYSQL ///
+          </div>
         </div>
 
+        {/* ── PROJECTS ── */}
         <section className="projects" id="work">
-            {[
-              { id: "01", title: "PROJECT ALPHA", desc: "A WebGL physics simulator designed to absolutely melt laptop GPUs. Written in pure GLSL and spite." },
-              { id: "02", title: "DOMAIN EXPANSION", desc: "Volumetric 3D particle renderer mapping mathematical signed distance fields. Because using images was too easy." },
-              { id: "03", title: "SYSTEM OVERRIDE", desc: "Experimental brutalist UI study. Aggressive typography, monochromatic accents, and heavy glassmorphism." },
-              { id: "04", title: "ARCHIVE", desc: "A graveyard of abandoned ideas, deprecated frameworks, and designs that my AI assistant hated." }
-            ].map((proj, idx) => (
+          <motion.div
+            className="section-header"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+          >
+            <span className="section-label">01 / PROJECTS</span>
+            <h2 className="section-title">SELECTED WORK</h2>
+          </motion.div>
+
+          <motion.div
+            className="projects-grid"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={staggerContainer}
+          >
+            {projects.map((proj, idx) => (
               <motion.div 
                 key={proj.id}
                 className="project-card glass-target"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
                 variants={fadeInUp}
-                transition={{ delay: idx * 0.1 }}
               >
-                  <div className="project-num">{proj.id}</div>
-                  <h2 className="project-title">{proj.title}</h2>
-                  <p className="project-desc">{proj.desc}</p>
+                <div className="project-num">{proj.id}</div>
+                <span className="project-role">{proj.role}</span>
+                <h2 className="project-title">{proj.title}</h2>
+                <p className="project-desc">{proj.desc}</p>
+                <div className="tag-row">
+                  {proj.tags.map(t => (
+                    <span key={t} className="tag">{t}</span>
+                  ))}
+                </div>
               </motion.div>
             ))}
+          </motion.div>
         </section>
 
+        {/* ── SKILLS ── */}
+        <section className="skills-section" id="skills">
+          <motion.div
+            className="section-header"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+          >
+            <span className="section-label">02 / SKILLS</span>
+            <h2 className="section-title">TECHNICAL ARSENAL</h2>
+          </motion.div>
+
+          <motion.div
+            className="skills-grid"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={staggerContainer}
+          >
+            {skills.map((group) => (
+              <motion.div key={group.category} className="skill-card glass-target" variants={fadeInUp}>
+                <h3 className="skill-category">{group.category}</h3>
+                <ul className="skill-list">
+                  {group.items.map(item => (
+                    <li key={item} className="skill-item">
+                      <span className="skill-bullet">▸</span> {item}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </motion.div>
+        </section>
+
+        {/* ── ABOUT / EDUCATION ── */}
         <section className="about" id="about">
+          <motion.div
+            className="section-header"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+          >
+            <span className="section-label">03 / ABOUT</span>
+            <h2 className="section-title">BEHIND THE CODE</h2>
+          </motion.div>
+
+          <div className="about-grid">
             <motion.div 
               className="about-content glass-target"
               initial="hidden"
@@ -149,34 +281,134 @@ export default function App() {
               viewport={{ once: true, margin: "-100px" }}
               variants={fadeInUp}
             >
-                <h2 className="project-title" style={{ marginTop: 0 }}>BEHIND THE CODE</h2>
-                <p className="project-desc" style={{ maxWidth: '100%', margin: '0 auto', fontSize: '1rem' }}>
-                    I write code. Sometimes it works. Usually, I'm just staring at a screen waiting for something to compile while my GPU fans scream for mercy. I specialize in turning simple DOM elements into unnecessarily complex mathematical operations. 
-                </p>
+              <p className="project-desc" style={{ maxWidth: '100%', margin: '0', fontSize: '1rem', lineHeight: '1.8' }}>
+                I'm a third-year Computer Science student at Egerton University, Njoro — passionate about engineering
+                end-to-end software that actually solves real problems. From architecting fintech backends to designing
+                campus network infrastructure, I thrive at the intersection of systems thinking and creative coding.
+                When I'm not pushing commits, I'm competing at hackathons across Kenya.
+              </p>
             </motion.div>
+
+            <div className="education-stack">
+              <motion.div
+                className="edu-card glass-target"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInUp}
+              >
+                <span className="section-label" style={{ marginBottom: '0.5rem', display: 'block' }}>CURRENT</span>
+                <h3 className="edu-name">EGERTON UNIVERSITY</h3>
+                <p className="edu-degree">BSc. Computer Science &mdash; Year 3, Sem 2</p>
+                <p className="edu-meta">Njoro, Kenya &nbsp;|&nbsp; 2023 – PRESENT</p>
+                <ul className="edu-courses">
+                  <li>Systems Programming</li>
+                  <li>Object-Oriented Programming</li>
+                  <li>Probability &amp; Statistics</li>
+                </ul>
+              </motion.div>
+
+              <motion.div
+                className="edu-card glass-target"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInUp}
+                transition={{ delay: 0.15 }}
+              >
+                <span className="section-label" style={{ marginBottom: '0.5rem', display: 'block' }}>SECONDARY</span>
+                <h3 className="edu-name">MASENO SCHOOL</h3>
+                <p className="edu-degree">Kenya Certificate of Secondary Education</p>
+                <p className="edu-meta">Kisumu, Kenya &nbsp;|&nbsp; 2019 – 2022</p>
+              </motion.div>
+            </div>
+          </div>
         </section>
 
+        {/* ── HACKATHONS ── */}
+        <section className="hackathons-section" id="hackathons">
+          <motion.div
+            className="section-header"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+          >
+            <span className="section-label">04 / EVENTS</span>
+            <h2 className="section-title">HACKATHONS &amp; SUMMITS</h2>
+          </motion.div>
+
+          <motion.div
+            className="hackathon-list"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={staggerContainer}
+          >
+            {hackathons.map((h, i) => (
+              <motion.div key={i} className="hackathon-row glass-target" variants={fadeInUp}>
+                <span className="hackathon-num">{String(i + 1).padStart(2, '0')}</span>
+                <span className="hackathon-name">{h.name}</span>
+                <span className="hackathon-date">{h.date}</span>
+              </motion.div>
+            ))}
+          </motion.div>
+        </section>
+
+        {/* ── CONTACT / FOOTER ── */}
         <footer className="footer" id="contact">
-            <motion.h1 
-              className="hero-text-huge"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeInUp}
-            >
-              SAY HELLO
-            </motion.h1>
+          <motion.h1 
+            className="hero-text-huge"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+          >
+            SAY HELLO
+          </motion.h1>
+
+          <motion.div
+            className="contact-links"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+          >
             <motion.a 
-              href="mailto:donatello@example.com" 
+              href="mailto:doncool933@gmail.com" 
               className="brutal-btn glass-target"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
               variants={fadeInUp}
-              transition={{ delay: 0.2 }}
             >
-              TRANSMIT MESSAGE ///
+              EMAIL ///
             </motion.a>
+            <motion.a 
+              href="https://github.com/dowido" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="brutal-btn glass-target"
+              variants={fadeInUp}
+            >
+              GITHUB ///
+            </motion.a>
+            <motion.a 
+              href="tel:+254728016048"
+              className="brutal-btn glass-target"
+              variants={fadeInUp}
+            >
+              CALL ///
+            </motion.a>
+          </motion.div>
+
+          <motion.p
+            className="footer-credit"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            transition={{ delay: 0.4 }}
+          >
+            DONALD AURTHUR OWIDO &nbsp;/// &nbsp;NAKURU, KENYA &nbsp;/// &nbsp;{new Date().getFullYear()}
+          </motion.p>
         </footer>
       </div>
     </>
