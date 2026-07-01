@@ -646,6 +646,11 @@
         .hero-badges img { height: 22px; border-radius: 4px; opacity: 0.85; transition: opacity 0.2s; }
         .hero-badges img:hover { opacity: 1; }
 
+        .section-title {
+            font-size: clamp(3.5rem, 8vw, 5rem);
+            line-height: 0.9;
+        }
+
         /* ── Philosophy section ── */
         .philosophy-section {
             padding: 7rem 2rem;
@@ -707,75 +712,6 @@
             border-left: 1px solid rgba(255,255,255,0.06);
         }
 
-        /* ── Engineering taxonomy terminal block ── */
-        .taxonomy-section {
-            padding: 7rem 2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-        }
-        .taxonomy-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            margin-top: 4rem;
-            max-width: 1200px;
-        }
-        .taxonomy-terminal {
-            background: #0a0a0a;
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        .taxonomy-terminal:hover {
-            border-color: rgba(204,255,0,0.18);
-            box-shadow: 0 0 30px rgba(204,255,0,0.04);
-        }
-        .taxonomy-terminal-bar {
-            background: #111;
-            padding: 0.7rem 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .t-dot { width:10px; height:10px; border-radius:50%; }
-        .t-dot:nth-child(1) { background: #ff5f57; }
-        .t-dot:nth-child(2) { background: #ffbd2e; }
-        .t-dot:nth-child(3) { background: #28c840; }
-        .t-title {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 3px;
-            color: rgba(244,244,244,0.3);
-            margin-left: 0.5rem;
-        }
-        .taxonomy-terminal-body {
-            padding: 1.5rem 1.8rem;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.75rem;
-            line-height: 2.2;
-            color: rgba(244,244,244,0.55);
-            text-transform: none;
-            letter-spacing: 0;
-        }
-        .tx-key { color: var(--cyan); }
-        .tx-val { color: rgba(244,244,244,0.75); }
-        .tx-comment { color: rgba(204,255,0,0.55); }
-        .tx-bullet {
-            display: flex;
-            align-items: baseline;
-            gap: 0.6rem;
-            margin: 0.15rem 0;
-        }
-        .tx-bullet-dot { color: var(--neon); flex-shrink: 0; }
-        .tx-section-head {
-            color: var(--neon);
-            font-size: 0.65rem;
-            letter-spacing: 3px;
-            margin-top: 1rem;
-            margin-bottom: 0.3rem;
-            opacity: 0.8;
-        }
 
         /* ── Engineering Focus Areas ── */
         .focus-section {
@@ -790,28 +726,25 @@
             max-width: 1200px;
         }
         .focus-card {
-            background: #080808;
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 12px;
+            background: #000;
+            border: 2px solid var(--cyan);
+            border-radius: 0;
             padding: 2.5rem;
             position: relative;
-            overflow: hidden;
-            transition: border-color 0.3s, transform 0.3s;
+            box-shadow: 8px 8px 0px var(--cyan);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .focus-card:nth-child(even) {
+            border-color: var(--neon);
+            box-shadow: 8px 8px 0px var(--neon);
         }
         .focus-card:hover {
-            border-color: rgba(204,255,0,0.15);
-            transform: translateY(-4px);
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0px var(--cyan);
         }
-        .focus-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--neon), var(--cyan));
-            opacity: 0;
-            transition: opacity 0.3s;
+        .focus-card:nth-child(even):hover {
+            box-shadow: 12px 12px 0px var(--neon);
         }
-        .focus-card:hover::before { opacity: 1; }
         .focus-card-icon {
             font-size: 1.4rem;
             margin-bottom: 1.2rem;
@@ -870,14 +803,14 @@
             margin-bottom: 3rem;
         }
         .techicons-group-title {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.58rem;
-            letter-spacing: 4px;
-            color: rgba(244,244,244,0.25);
+            font-family: 'Anton', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: var(--fg);
             text-transform: uppercase;
             margin-bottom: 1.5rem;
             padding-bottom: 0.6rem;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
+            border-bottom: 2px solid var(--neon);
         }
         .techicons-row {
             display: flex;
@@ -890,23 +823,24 @@
             align-items: center;
             gap: 0.6rem;
             padding: 1.2rem 1rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.05);
-            background: rgba(255,255,255,0.02);
+            border-radius: 0;
+            border: 2px solid var(--grey);
+            background: #000;
+            box-shadow: 4px 4px 0px var(--grey);
             min-width: 80px;
-            transition: border-color 0.25s, background 0.25s, transform 0.25s;
+            transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
             cursor: default;
         }
         .tech-icon-item:hover {
-            border-color: rgba(204,255,0,0.2);
-            background: rgba(204,255,0,0.04);
-            transform: translateY(-3px);
+            border-color: var(--neon);
+            box-shadow: 6px 6px 0px var(--neon);
+            transform: translate(-2px, -2px);
         }
         .tech-icon-item img {
             width: 44px;
             height: 44px;
             object-fit: contain;
-            filter: grayscale(15%);
+            filter: grayscale(100%);
             transition: filter 0.25s, transform 0.25s;
         }
         .tech-icon-item:hover img {
@@ -928,12 +862,18 @@
 
         /* ── Responsive additions ── */
         @media (max-width: 768px) {
+            .philosophy-section, .taxonomy-section, .focus-section, .techicons-section {
+                padding: 4rem 1.5rem;
+            }
             .taxonomy-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-            .focus-grid { grid-template-columns: 1fr; }
-            .philosophy-quote { font-size: 1.6rem; }
+            .taxonomy-terminal-body { font-size: 0.7rem; padding: 1rem 1.2rem; }
+            .focus-grid { grid-template-columns: 1fr; margin-top: 2rem; }
+            .philosophy-quote { font-size: 1.6rem; padding-left: 1.5rem; }
+            .philosophy-body { font-size: 0.95rem; padding-left: 1.5rem; }
             .techicons-row { gap: 1rem; }
             .tech-icon-item { min-width: 70px; padding: 1rem 0.75rem; }
             .tech-icon-item img { width: 36px; height: 36px; }
+            .section-title { font-size: 3.5rem; }
         }
     </style>
 </head>
@@ -954,7 +894,6 @@
         <div class="nav-links">
             <a href="#work" class="hover-target">WORK</a>
             <a href="#stack" class="hover-target">STACK</a>
-            <a href="#taxonomy" class="hover-target">SYSTEMS</a>
             <a href="#lab" class="hover-target">LAB</a>
             <a href="#about" class="hover-target">ABOUT</a>
             <a href="#contact" class="hover-target">CONTACT</a>
@@ -1100,81 +1039,9 @@
         </div>
     </section>
 
-    <!-- ══ ENGINEERING TAXONOMY ══ -->
-    <section class="taxonomy-section reveal" id="taxonomy">
-        <h2 class="glitch-text hover-target" style="font-size:5rem;">SYSTEMS &amp; TAXONOMY</h2>
-        <div class="taxonomy-grid">
-
-            <!-- Terminal: Runtimes -->
-            <div class="taxonomy-terminal">
-                <div class="taxonomy-terminal-bar">
-                    <span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span>
-                    <span class="t-title">RUNTIMES.SYS</span>
-                </div>
-                <div class="taxonomy-terminal-body">
-                    <div><span class="tx-key">system_host:</span> &nbsp;<span class="tx-val">Egerton University (CS)</span></div>
-                    <div><span class="tx-key">engine_runtimes:</span> <span class="tx-val">[JVM, V8, Dart VM, CPython]</span></div>
-                    <div class="tx-section-head"># HIGH-PERFORMANCE RUNTIMES</div>
-                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>Kotlin &middot; Java &middot; Dart</span></div>
-                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>Python &middot; ES6+ JavaScript</span></div>
-                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>SQL</span></div>
-                </div>
-            </div>
-
-            <!-- Terminal: Enterprise & Web -->
-            <div class="taxonomy-terminal">
-                <div class="taxonomy-terminal-bar">
-                    <span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span>
-                    <span class="t-title">ENTERPRISE.SYS</span>
-                </div>
-                <div class="taxonomy-terminal-body">
-                    <div class="tx-section-head"># ENTERPRISE &amp; WEB SYSTEMS</div>
-                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>Spring Boot (IoC, MVC, Security)</span></div>
-                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>Django</span></div>
-                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>RESTful API Design</span></div>
-                    <div class="tx-section-head"># UI &amp; CLIENT-SIDE ENGINES</div>
-                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>Jetpack Compose</span></div>
-                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>React Native &middot; Flutter</span></div>
-                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>React (Virtual DOM / Reconciliation)</span></div>
-                </div>
-            </div>
-
-            <!-- Terminal: Automation & Low-Level -->
-            <div class="taxonomy-terminal">
-                <div class="taxonomy-terminal-bar">
-                    <span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span>
-                    <span class="t-title">AUTOMATION.SYS</span>
-                </div>
-                <div class="taxonomy-terminal-body">
-                    <div class="tx-section-head"># AUTOMATION, OS &amp; LOW-LEVEL</div>
-                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>ADB (Android Debug Bridge)</span></div>
-                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>Linux System Administration</span></div>
-                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>Bash &middot; Git / GitHub</span></div>
-                </div>
-            </div>
-
-            <!-- Terminal: Performance Metrics -->
-            <div class="taxonomy-terminal">
-                <div class="taxonomy-terminal-bar">
-                    <span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span>
-                    <span class="t-title">PERF_METRICS.LOG</span>
-                </div>
-                <div class="taxonomy-terminal-body">
-                    <div><span class="tx-comment"># Frame budget target</span></div>
-                    <div><span class="tx-key">frame_budget:</span> &nbsp;<span class="tx-val">16.67ms @ 60Hz</span></div>
-                    <div><span class="tx-key">complexity_target:</span> <span class="tx-val">O(1) / O(n log n)</span></div>
-                    <div><span class="tx-key">thread_model:</span> &nbsp;<span class="tx-val">coroutines + async</span></div>
-                    <div><span class="tx-key">profiling:</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="tx-val">Android ADB + SDK</span></div>
-                    <div><span class="tx-key">db_strategy:</span> &nbsp;&nbsp;<span class="tx-val">indexed + cached</span></div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
     <!-- ══ ENGINEERING FOCUS AREAS ══ -->
     <section class="focus-section reveal">
-        <h2 class="glitch-text hover-target" style="font-size:5rem;">FOCUS_AREAS</h2>
+        <h2 class="glitch-text hover-target section-title">FOCUS_AREAS</h2>
         <div class="focus-grid">
 
             <div class="focus-card hover-target">
