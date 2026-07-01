@@ -543,15 +543,14 @@
             content: '';
             position: absolute;
             left: 1.8rem; top: 0; bottom: 0;
-            width: 1px;
-            background: linear-gradient(180deg, var(--neon), var(--cyan));
-            opacity: 0.3;
+            width: 2px;
+            background: var(--cyan);
         }
         .lab-item {
             aspect-ratio: unset !important;
             background: transparent !important;
             border: 1px solid transparent !important;
-            border-radius: 10px;
+            border-radius: 0;
             display: flex !important;
             flex-direction: row !important;
             align-items: center !important;
@@ -561,19 +560,20 @@
             position: relative;
             transition: background 0.3s, border-color 0.3s, transform 0.3s;
         }
-        /* glowing timeline dot */
+        /* brutalist timeline node */
         .lab-item::before {
             content: '' !important;
             position: absolute;
-            left: 1.3rem;
+            left: calc(1.8rem - 6px);
             top: 50%;
             transform: translateY(-50%);
-            width: 11px; height: 11px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--neon), var(--cyan));
-            box-shadow: 0 0 8px rgba(204,255,0,0.5);
+            width: 14px; height: 14px;
+            border-radius: 0;
+            background: #000;
+            border: 2px solid var(--cyan);
+            box-shadow: 4px 4px 0px var(--cyan);
             z-index: 1;
-            transition: box-shadow 0.3s;
+            transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
         }
         .lab-item:hover {
             background: rgba(255,255,255,0.025) !important;
@@ -581,7 +581,9 @@
             transform: translateX(8px);
         }
         .lab-item:hover::before {
-            box-shadow: 0 0 18px rgba(0,255,200,0.65), 0 0 32px rgba(204,255,0,0.3);
+            border-color: var(--neon);
+            box-shadow: 6px 6px 0px var(--neon);
+            transform: translateY(-50%) translate(-2px, -2px);
         }
         .lab-item span {
             font-family: 'Space Mono', monospace;
