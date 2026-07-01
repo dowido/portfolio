@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DONALD OWIDO | FULL-STACK DEV ///</title>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --neon: #ccff00; 
@@ -384,6 +384,557 @@
             .cursor { display: none; } 
             * { cursor: auto !important; }
         }
+
+        /* ═══════════════════════════════════════════════════════════
+           VISUAL UPGRADE ADDITIONS — July 2026
+           All rules below add to / override the originals above.
+           The original structure is untouched.
+        ═══════════════════════════════════════════════════════════ */
+
+        /* ── Dual accent variable ── */
+        :root { --cyan: #00ffc8; }
+
+        /* ── Gradient logo ── */
+        .logo-container {
+            background: linear-gradient(120deg, var(--neon), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo-rest { -webkit-text-fill-color: var(--fg); }
+
+        /* ── Nav links — softer, pill hover ── */
+        .nav-links a {
+            color: rgba(244,244,244,0.6);
+            border-radius: 6px;
+        }
+        .nav-links a:hover {
+            background: rgba(204,255,0,0.08);
+            color: var(--neon);
+            border-color: rgba(204,255,0,0.2);
+            transform: none;
+        }
+
+        /* ── Hero dot-grid background ── */
+        .hero { position: relative; overflow: hidden; }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(204,255,0,0.09) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            animation: heroGridPulse 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .hero > * { position: relative; z-index: 1; }
+        @keyframes heroGridPulse {
+            0%, 100% { opacity: 0.4; }
+            50%       { opacity: 0.85; }
+        }
+
+        /* ── Available for Hire badge ── */
+        .hero-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--cyan);
+            border: 1px solid rgba(0,255,200,0.25);
+            background: rgba(0,255,200,0.06);
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            width: fit-content;
+            margin-bottom: 1rem;
+            animation: hsBadgeFade 0.9s ease forwards;
+        }
+        @keyframes hsBadgeFade {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .status-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #00e08b;
+            box-shadow: 0 0 6px #00e08b;
+            flex-shrink: 0;
+            animation: dotGlow 2s ease-in-out infinite;
+        }
+        @keyframes dotGlow {
+            0%, 100% { box-shadow: 0 0 4px #00e08b; }
+            50%       { box-shadow: 0 0 14px #00e08b, 0 0 28px rgba(0,224,139,0.3); }
+        }
+
+        /* ── Hero desc — readable font ── */
+        .hero-desc {
+            font-family: 'Outfit', sans-serif !important;
+            font-size: 1rem !important;
+            font-weight: 400;
+            color: rgba(244,244,244,0.6) !important;
+            text-transform: none;
+            letter-spacing: 0;
+            line-height: 1.75;
+        }
+
+        /* ── Shimmer on buttons ── */
+        .brutal-btn { overflow: hidden; border-radius: 8px; }
+        .brutal-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 55%; height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.12), transparent);
+            transition: left 0.5s ease;
+            pointer-events: none;
+        }
+        .brutal-btn:hover::before { left: 150%; }
+        /* Gradient primary CTA */
+        .brutal-btn.cta-primary {
+            background: linear-gradient(135deg, var(--neon) 0%, var(--cyan) 100%) !important;
+            color: #000 !important;
+            border-color: transparent !important;
+            box-shadow: 4px 4px 0px rgba(0,255,200,0.4) !important;
+        }
+        .brutal-btn.cta-primary:hover {
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--neon) 100%) !important;
+            box-shadow: 0 8px 28px rgba(0,255,200,0.3) !important;
+        }
+
+        /* ── Scroll progress gradient ── */
+        #scroll-progress { background: linear-gradient(90deg, var(--neon), var(--cyan)) !important; }
+
+        /* ── Per-project accent stripe ── */
+        .project-card { overflow: hidden; }
+        .project-card:nth-child(1)::after { content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:#DFFF00; opacity:0.6; transition:width 0.3s,opacity 0.3s; }
+        .project-card:nth-child(2)::after { content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:#00ffc8; opacity:0.6; transition:width 0.3s,opacity 0.3s; }
+        .project-card:nth-child(3)::after { content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:#FF6B6B; opacity:0.6; transition:width 0.3s,opacity 0.3s; }
+        .project-card:nth-child(4)::after { content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:#A78BFA; opacity:0.6; transition:width 0.3s,opacity 0.3s; }
+        .project-card:hover::after { width:4px; opacity:1; }
+
+        /* ── Project role label (colour per card) ── */
+        .project-card:nth-child(1) .project-role { color: #DFFF00; }
+        .project-card:nth-child(2) .project-role { color: #00ffc8; }
+        .project-card:nth-child(3) .project-role { color: #FF6B6B; }
+        .project-card:nth-child(4) .project-role { color: #A78BFA; }
+        .project-role {
+            font-size: 0.6rem;
+            letter-spacing: 4px;
+            display: block;
+            margin-bottom: 1rem;
+            opacity: 0.85;
+        }
+
+        /* ── Project desc readable ── */
+        .project-desc {
+            font-family: 'Outfit', sans-serif !important;
+            text-transform: none !important;
+            font-size: 1rem !important;
+            font-weight: 400;
+            letter-spacing: 0 !important;
+            line-height: 1.8;
+        }
+
+        /* ── Hackathon items — timeline look ── */
+        .lab-grid { grid-template-columns: 1fr !important; gap: 0 !important; margin-top: 3rem; position: relative; }
+        .lab-grid::before {
+            content: '';
+            position: absolute;
+            left: 1.8rem; top: 0; bottom: 0;
+            width: 1px;
+            background: linear-gradient(180deg, var(--neon), var(--cyan));
+            opacity: 0.3;
+        }
+        .lab-item {
+            aspect-ratio: unset !important;
+            background: transparent !important;
+            border: 1px solid transparent !important;
+            border-radius: 10px;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            gap: 2rem;
+            padding: 1.6rem 2rem 1.6rem 5rem !important;
+            position: relative;
+            transition: background 0.3s, border-color 0.3s, transform 0.3s;
+        }
+        /* glowing timeline dot */
+        .lab-item::before {
+            content: '' !important;
+            position: absolute;
+            left: 1.3rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 11px; height: 11px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon), var(--cyan));
+            box-shadow: 0 0 8px rgba(204,255,0,0.5);
+            z-index: 1;
+            transition: box-shadow 0.3s;
+        }
+        .lab-item:hover {
+            background: rgba(255,255,255,0.025) !important;
+            border-color: rgba(255,255,255,0.06) !important;
+            transform: translateX(8px);
+        }
+        .lab-item:hover::before {
+            box-shadow: 0 0 18px rgba(0,255,200,0.65), 0 0 32px rgba(204,255,0,0.3);
+        }
+        .lab-item span {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62rem !important;
+            letter-spacing: 3px;
+            color: var(--cyan) !important;
+            opacity: 0.7;
+            min-width: 7rem;
+            font-weight: 400 !important;
+        }
+        .lab-item h4 {
+            font-size: 1.6rem !important;
+            margin-bottom: 0 !important;
+            transition: color 0.3s;
+        }
+        .lab-item:hover h4 { color: var(--neon); }
+
+        /* ── About text readable ── */
+        .about-text {
+            font-family: 'Outfit', sans-serif !important;
+            font-size: 1.1rem !important;
+            line-height: 1.75 !important;
+            text-transform: none !important;
+            letter-spacing: 0 !important;
+            color: #333 !important;
+        }
+
+        /* ── About stat numbers — gradient ── */
+        .about-stat-num {
+            font-size: 3.5rem !important;
+            background: linear-gradient(135deg, #8fbe00, #00a870);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent !important;
+        }
+        .about-stats {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+
+        /* ── Footer glow ── */
+        .footer { position: relative; }
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 4rem; left: 50%;
+            transform: translateX(-50%);
+            width: 500px; height: 200px;
+            background: radial-gradient(ellipse, rgba(204,255,0,0.07) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* ── Profile badges row ── */
+        .hero-badges {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+        .hero-badges img { height: 22px; border-radius: 4px; opacity: 0.85; transition: opacity 0.2s; }
+        .hero-badges img:hover { opacity: 1; }
+
+        /* ── Philosophy section ── */
+        .philosophy-section {
+            padding: 7rem 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        /* wrapper needed because philosophy is outside a centered container */
+        .philosophy-wrap {
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .philosophy-label {
+            font-size: 0.62rem;
+            letter-spacing: 4px;
+            color: var(--cyan);
+            opacity: 0.7;
+            margin-bottom: 2rem;
+        }
+        .philosophy-quote {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            color: var(--fg);
+            letter-spacing: 1px;
+            line-height: 1.15;
+            border-left: 3px solid var(--neon);
+            padding-left: 2rem;
+            max-width: 860px;
+            position: relative;
+        }
+        .philosophy-quote::before {
+            content: '\201C';
+            position: absolute;
+            left: -0.1rem;
+            top: -0.5rem;
+            font-size: 4rem;
+            color: var(--neon);
+            opacity: 0.25;
+            font-family: serif;
+            line-height: 1;
+        }
+        .philosophy-body {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 400;
+            color: rgba(244,244,244,0.5);
+            line-height: 1.8;
+            text-transform: none;
+            letter-spacing: 0;
+            max-width: 720px;
+            margin-top: 2rem;
+            padding-left: 2rem;
+            border-left: 1px solid rgba(255,255,255,0.06);
+        }
+
+        /* ── Engineering taxonomy terminal block ── */
+        .taxonomy-section {
+            padding: 7rem 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .taxonomy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 4rem;
+            max-width: 1200px;
+        }
+        .taxonomy-terminal {
+            background: #0a0a0a;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .taxonomy-terminal:hover {
+            border-color: rgba(204,255,0,0.18);
+            box-shadow: 0 0 30px rgba(204,255,0,0.04);
+        }
+        .taxonomy-terminal-bar {
+            background: #111;
+            padding: 0.7rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .t-dot { width:10px; height:10px; border-radius:50%; }
+        .t-dot:nth-child(1) { background: #ff5f57; }
+        .t-dot:nth-child(2) { background: #ffbd2e; }
+        .t-dot:nth-child(3) { background: #28c840; }
+        .t-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 3px;
+            color: rgba(244,244,244,0.3);
+            margin-left: 0.5rem;
+        }
+        .taxonomy-terminal-body {
+            padding: 1.5rem 1.8rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            line-height: 2.2;
+            color: rgba(244,244,244,0.55);
+            text-transform: none;
+            letter-spacing: 0;
+        }
+        .tx-key { color: var(--cyan); }
+        .tx-val { color: rgba(244,244,244,0.75); }
+        .tx-comment { color: rgba(204,255,0,0.55); }
+        .tx-bullet {
+            display: flex;
+            align-items: baseline;
+            gap: 0.6rem;
+            margin: 0.15rem 0;
+        }
+        .tx-bullet-dot { color: var(--neon); flex-shrink: 0; }
+        .tx-section-head {
+            color: var(--neon);
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            margin-top: 1rem;
+            margin-bottom: 0.3rem;
+            opacity: 0.8;
+        }
+
+        /* ── Engineering Focus Areas ── */
+        .focus-section {
+            padding: 7rem 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .focus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+            margin-top: 4rem;
+            max-width: 1200px;
+        }
+        .focus-card {
+            background: #080808;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .focus-card:hover {
+            border-color: rgba(204,255,0,0.15);
+            transform: translateY(-4px);
+        }
+        .focus-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon), var(--cyan));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .focus-card:hover::before { opacity: 1; }
+        .focus-card-icon {
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+            display: block;
+        }
+        .focus-card-title {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            color: var(--fg);
+            margin-bottom: 1.5rem;
+        }
+        .focus-card ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+        .focus-card li {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 400;
+            color: rgba(244,244,244,0.5);
+            text-transform: none;
+            letter-spacing: 0;
+            line-height: 1.6;
+            display: flex;
+            gap: 0.6rem;
+            align-items: flex-start;
+        }
+        .focus-card li::before {
+            content: '▸';
+            color: var(--neon);
+            flex-shrink: 0;
+            margin-top: 0.05rem;
+        }
+        .focus-card li strong {
+            color: rgba(244,244,244,0.8);
+            font-weight: 600;
+        }
+
+        /* ── Tech icon grid ── */
+        .techicons-section {
+            padding: 6rem 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .techicons-label {
+            font-size: 0.6rem;
+            letter-spacing: 4px;
+            color: var(--cyan);
+            opacity: 0.6;
+            margin-bottom: 3.5rem;
+        }
+        .techicons-group {
+            max-width: 1200px;
+            margin-bottom: 3rem;
+        }
+        .techicons-group-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 4px;
+            color: rgba(244,244,244,0.25);
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .techicons-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        .tech-icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 1.2rem 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.02);
+            min-width: 80px;
+            transition: border-color 0.25s, background 0.25s, transform 0.25s;
+            cursor: default;
+        }
+        .tech-icon-item:hover {
+            border-color: rgba(204,255,0,0.2);
+            background: rgba(204,255,0,0.04);
+            transform: translateY(-3px);
+        }
+        .tech-icon-item img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            filter: grayscale(15%);
+            transition: filter 0.25s, transform 0.25s;
+        }
+        .tech-icon-item:hover img {
+            filter: grayscale(0%) drop-shadow(0 0 8px rgba(204,255,0,0.2));
+            transform: scale(1.08);
+        }
+        .tech-icon-item span {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 500;
+            color: rgba(244,244,244,0.45);
+            text-align: center;
+            text-transform: none;
+            letter-spacing: 0;
+            white-space: nowrap;
+            transition: color 0.25s;
+        }
+        .tech-icon-item:hover span { color: rgba(244,244,244,0.8); }
+
+        /* ── Responsive additions ── */
+        @media (max-width: 768px) {
+            .taxonomy-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .focus-grid { grid-template-columns: 1fr; }
+            .philosophy-quote { font-size: 1.6rem; }
+            .techicons-row { gap: 1rem; }
+            .tech-icon-item { min-width: 70px; padding: 1rem 0.75rem; }
+            .tech-icon-item img { width: 36px; height: 36px; }
+        }
     </style>
 </head>
 <body>
@@ -403,6 +954,7 @@
         <div class="nav-links">
             <a href="#work" class="hover-target">WORK</a>
             <a href="#stack" class="hover-target">STACK</a>
+            <a href="#taxonomy" class="hover-target">SYSTEMS</a>
             <a href="#lab" class="hover-target">LAB</a>
             <a href="#about" class="hover-target">ABOUT</a>
             <a href="#contact" class="hover-target">CONTACT</a>
@@ -429,6 +981,23 @@
             <a href="#work" class="brutal-btn hover-target glass-target">VIEW WORK ///</a>
         </div>
     </section>
+
+    <!-- ══ PHILOSOPHY ══ -->
+    <div class="philosophy-wrap">
+        <section class="philosophy-section reveal">
+            <span class="philosophy-label">PROFESSIONAL PHILOSOPHY</span>
+            <blockquote class="philosophy-quote">
+                If it isn&rsquo;t optimized, it isn&rsquo;t finished.
+            </blockquote>
+            <p class="philosophy-body">
+                I look at software through the lens of performance, resource utilization, and architectural cleanliness &mdash;
+                whether that means profiling rendering pipelines to guarantee smooth frames under the
+                <strong style="color:var(--neon)">16.67ms / 60Hz threshold</strong>, or optimizing backend access patterns from
+                <strong style="color:var(--cyan)">O(n&sup2;) &rarr; O(1) / O(n&thinsp;log&thinsp;n)</strong>.
+                I build systems designed to scale without breaking a sweat.
+            </p>
+        </section>
+    </div>
 
     <div class="sticky-wrapper" id="stack">
         <div class="sticky-container">
@@ -529,6 +1098,211 @@
                 <span style="font-size:0.65rem;letter-spacing:2px;padding:0.3rem 0.8rem;border:1px solid #333;color:#666;">MOBILE</span>
             </div>
         </div>
+    </section>
+
+    <!-- ══ ENGINEERING TAXONOMY ══ -->
+    <section class="taxonomy-section reveal" id="taxonomy">
+        <h2 class="glitch-text hover-target" style="font-size:5rem;">SYSTEMS &amp; TAXONOMY</h2>
+        <div class="taxonomy-grid">
+
+            <!-- Terminal: Runtimes -->
+            <div class="taxonomy-terminal">
+                <div class="taxonomy-terminal-bar">
+                    <span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span>
+                    <span class="t-title">RUNTIMES.SYS</span>
+                </div>
+                <div class="taxonomy-terminal-body">
+                    <div><span class="tx-key">system_host:</span> &nbsp;<span class="tx-val">Egerton University (CS)</span></div>
+                    <div><span class="tx-key">engine_runtimes:</span> <span class="tx-val">[JVM, V8, Dart VM, CPython]</span></div>
+                    <div class="tx-section-head"># HIGH-PERFORMANCE RUNTIMES</div>
+                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>Kotlin &middot; Java &middot; Dart</span></div>
+                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>Python &middot; ES6+ JavaScript</span></div>
+                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>SQL</span></div>
+                </div>
+            </div>
+
+            <!-- Terminal: Enterprise & Web -->
+            <div class="taxonomy-terminal">
+                <div class="taxonomy-terminal-bar">
+                    <span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span>
+                    <span class="t-title">ENTERPRISE.SYS</span>
+                </div>
+                <div class="taxonomy-terminal-body">
+                    <div class="tx-section-head"># ENTERPRISE &amp; WEB SYSTEMS</div>
+                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>Spring Boot (IoC, MVC, Security)</span></div>
+                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>Django</span></div>
+                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>RESTful API Design</span></div>
+                    <div class="tx-section-head"># UI &amp; CLIENT-SIDE ENGINES</div>
+                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>Jetpack Compose</span></div>
+                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>React Native &middot; Flutter</span></div>
+                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>React (Virtual DOM / Reconciliation)</span></div>
+                </div>
+            </div>
+
+            <!-- Terminal: Automation & Low-Level -->
+            <div class="taxonomy-terminal">
+                <div class="taxonomy-terminal-bar">
+                    <span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span>
+                    <span class="t-title">AUTOMATION.SYS</span>
+                </div>
+                <div class="taxonomy-terminal-body">
+                    <div class="tx-section-head"># AUTOMATION, OS &amp; LOW-LEVEL</div>
+                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>ADB (Android Debug Bridge)</span></div>
+                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>Linux System Administration</span></div>
+                    <div class="tx-bullet"><span class="tx-bullet-dot">&diams;</span> <span>Bash &middot; Git / GitHub</span></div>
+                </div>
+            </div>
+
+            <!-- Terminal: Performance Metrics -->
+            <div class="taxonomy-terminal">
+                <div class="taxonomy-terminal-bar">
+                    <span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span>
+                    <span class="t-title">PERF_METRICS.LOG</span>
+                </div>
+                <div class="taxonomy-terminal-body">
+                    <div><span class="tx-comment"># Frame budget target</span></div>
+                    <div><span class="tx-key">frame_budget:</span> &nbsp;<span class="tx-val">16.67ms @ 60Hz</span></div>
+                    <div><span class="tx-key">complexity_target:</span> <span class="tx-val">O(1) / O(n log n)</span></div>
+                    <div><span class="tx-key">thread_model:</span> &nbsp;<span class="tx-val">coroutines + async</span></div>
+                    <div><span class="tx-key">profiling:</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="tx-val">Android ADB + SDK</span></div>
+                    <div><span class="tx-key">db_strategy:</span> &nbsp;&nbsp;<span class="tx-val">indexed + cached</span></div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ ENGINEERING FOCUS AREAS ══ -->
+    <section class="focus-section reveal">
+        <h2 class="glitch-text hover-target" style="font-size:5rem;">FOCUS_AREAS</h2>
+        <div class="focus-grid">
+
+            <div class="focus-card hover-target">
+                <div class="focus-card-title">CLIENT-SIDE &amp; MOBILE OPT.</div>
+                <ul>
+                    <li><strong>Native &amp; Cross-Platform</strong> &mdash; Fluid interfaces with Jetpack Compose, React Native &amp; Flutter; optimized state management &amp; zero unnecessary re-renders.</li>
+                    <li><strong>System-Level Profiling</strong> &mdash; Android SDK APIs via ADB for runtime debugging and performance profiling.</li>
+                    <li><strong>Memory &amp; Thread Management</strong> &mdash; Avoiding leaks, profiling GC overhead; Coroutines / Futures / Promises to keep the UI thread unblocked.</li>
+                </ul>
+            </div>
+
+            <div class="focus-card hover-target">
+                <div class="focus-card-title">SCALABLE BACKEND ARCH.</div>
+                <ul>
+                    <li><strong>Robust Frameworks</strong> &mdash; Modular, maintainable backends with Spring Boot; rapid, secure APIs with Django.</li>
+                    <li><strong>Database Tuning</strong> &mdash; Efficient SQL, indexed relations, and caching layers to maximize throughput and prevent connection pool starvation under load.</li>
+                </ul>
+            </div>
+
+            <div class="focus-card hover-target">
+                <div class="focus-card-title">TELEMETRY &amp; DATA ANALYSIS</div>
+                <ul>
+                    <li><strong>F1 Telemetry</strong> &mdash; Analyzing raw telemetry from Scuderia Ferrari sessions &mdash; speed profiles, throttle/braking dynamics, tire degradation curves.</li>
+                    <li><strong>Applied Analytics</strong> &mdash; Translating that same analytical intensity to the gym: tracking hypertrophy metrics and structural loading.</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ TECH STACK ICONS ══ -->
+    <section class="techicons-section reveal">
+        <div class="techicons-label">FULL TECH STACK</div>
+
+        <div class="techicons-group">
+            <div class="techicons-group-title">LANGUAGES</div>
+            <div class="techicons-row">
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=kotlin" alt="Kotlin" />
+                    <span>Kotlin</span>
+                </div>
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=java" alt="Java" />
+                    <span>Java</span>
+                </div>
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=dart" alt="Dart" />
+                    <span>Dart</span>
+                </div>
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=python" alt="Python" />
+                    <span>Python</span>
+                </div>
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=js" alt="JavaScript" />
+                    <span>JavaScript</span>
+                </div>
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=mysql" alt="SQL" />
+                    <span>SQL</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="techicons-group">
+            <div class="techicons-group-title">FRAMEWORKS &amp; PLATFORMS</div>
+            <div class="techicons-row">
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=spring" alt="Spring Boot" />
+                    <span>Spring Boot</span>
+                </div>
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=django" alt="Django" />
+                    <span>Django</span>
+                </div>
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=react" alt="React" />
+                    <span>React</span>
+                </div>
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=react" alt="React Native" />
+                    <span>React Native</span>
+                </div>
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=flutter" alt="Flutter" />
+                    <span>Flutter</span>
+                </div>
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=androidstudio" alt="Jetpack Compose" />
+                    <span>Jetpack Compose</span>
+                </div>
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=mysql" alt="MySQL" />
+                    <span>MySQL</span>
+                </div>
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=firebase" alt="Firebase" />
+                    <span>Firebase</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="techicons-group">
+            <div class="techicons-group-title">TOOLS &amp; SYSTEMS</div>
+            <div class="techicons-row">
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=linux" alt="Linux" />
+                    <span>Linux</span>
+                </div>
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=git" alt="Git" />
+                    <span>Git</span>
+                </div>
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=github" alt="GitHub" />
+                    <span>GitHub</span>
+                </div>
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=bash" alt="Bash" />
+                    <span>Bash</span>
+                </div>
+                <div class="tech-icon-item">
+                    <img src="https://skillicons.dev/icons?i=androidstudio" alt="ADB" />
+                    <span>ADB</span>
+                </div>
+            </div>
+        </div>
+
     </section>
 
     <section class="about-section" id="about">

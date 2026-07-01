@@ -133,6 +133,17 @@ export default function App() {
 
         {/* ── HERO ── */}
         <section className="hero">
+          {/* Available for hire badge */}
+          <motion.div
+            className="hero-status"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <span className="status-dot" />
+            Available for Hire ✦
+          </motion.div>
+
           <motion.p
             className="hero-eyebrow"
             initial="hidden"
@@ -172,7 +183,7 @@ export default function App() {
                 mobile solutions from the ground up with Jetpack Compose.
               </p>
               <div className="hero-cta-row">
-                <a href="#work" className="brutal-btn glass-target">VIEW WORK ///</a>
+                <a href="#work" className="brutal-btn brutal-btn--primary">VIEW WORK ///</a>
                 <a href="mailto:doncool933@gmail.com" className="brutal-btn brutal-btn--ghost glass-target">HIRE ME ///</a>
               </div>
           </motion.div>
@@ -275,32 +286,51 @@ export default function App() {
 
           <div className="about-grid">
             <motion.div 
-              className="about-content glass-target"
+              className="about-content"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={fadeInUp}
             >
-              <p className="project-desc" style={{ maxWidth: '100%', margin: '0', fontSize: '1rem', lineHeight: '1.8' }}>
+              <p className="about-text">
                 I'm a third-year Computer Science student at Egerton University, Njoro — passionate about engineering
                 end-to-end software that actually solves real problems. From architecting fintech backends to designing
                 campus network infrastructure, I thrive at the intersection of systems thinking and creative coding.
                 When I'm not pushing commits, I'm competing at hackathons across Kenya.
               </p>
+              {/* Stat counters */}
+              <div className="about-stats">
+                <div className="about-stat">
+                  <span className="about-stat-num">4+</span>
+                  <span className="about-stat-label">Hackathons</span>
+                </div>
+                <div className="about-stat">
+                  <span className="about-stat-num">3</span>
+                  <span className="about-stat-label">Years CS</span>
+                </div>
+                <div className="about-stat">
+                  <span className="about-stat-num">4</span>
+                  <span className="about-stat-label">Projects</span>
+                </div>
+                <div className="about-stat">
+                  <span className="about-stat-num">7+</span>
+                  <span className="about-stat-label">Tech Stacks</span>
+                </div>
+              </div>
             </motion.div>
 
             <div className="education-stack">
               <motion.div
-                className="edu-card glass-target"
+                className="edu-card"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={fadeInUp}
               >
-                <span className="section-label" style={{ marginBottom: '0.5rem', display: 'block' }}>CURRENT</span>
+                <span className="section-label">CURRENT</span>
                 <h3 className="edu-name">EGERTON UNIVERSITY</h3>
                 <p className="edu-degree">BSc. Computer Science &mdash; Year 3, Sem 2</p>
-                <p className="edu-meta">Njoro, Kenya &nbsp;|&nbsp; 2023 – PRESENT</p>
+                <p className="edu-meta">Njoro, Kenya &nbsp;|&nbsp; 2023 – Present</p>
                 <ul className="edu-courses">
                   <li>Systems Programming</li>
                   <li>Object-Oriented Programming</li>
@@ -309,14 +339,14 @@ export default function App() {
               </motion.div>
 
               <motion.div
-                className="edu-card glass-target"
+                className="edu-card"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={fadeInUp}
                 transition={{ delay: 0.15 }}
               >
-                <span className="section-label" style={{ marginBottom: '0.5rem', display: 'block' }}>SECONDARY</span>
+                <span className="section-label">SECONDARY</span>
                 <h3 className="edu-name">MASENO SCHOOL</h3>
                 <p className="edu-degree">Kenya Certificate of Secondary Education</p>
                 <p className="edu-meta">Kisumu, Kenya &nbsp;|&nbsp; 2019 – 2022</p>
