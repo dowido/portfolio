@@ -406,7 +406,7 @@
         /* ── Nav links — softer, pill hover ── */
         .nav-links a {
             color: rgba(244,244,244,0.6);
-            border-radius: 6px;
+            border-radius: 100px;
         }
         .nav-links a:hover {
             background: rgba(204,255,0,0.08);
@@ -481,7 +481,7 @@
         }
 
         /* ── Shimmer on buttons ── */
-        .brutal-btn { overflow: hidden; border-radius: 8px; }
+        .brutal-btn { overflow: hidden; border-radius: 100px; }
         .brutal-btn::before {
             content: '';
             position: absolute;
@@ -550,7 +550,7 @@
             aspect-ratio: unset !important;
             background: transparent !important;
             border: 1px solid transparent !important;
-            border-radius: 0;
+            border-radius: 16px;
             display: flex !important;
             flex-direction: row !important;
             align-items: center !important;
@@ -560,7 +560,7 @@
             position: relative;
             transition: background 0.3s, border-color 0.3s, transform 0.3s;
         }
-        /* brutalist timeline node */
+        /* rounded timeline node */
         .lab-item::before {
             content: '' !important;
             position: absolute;
@@ -568,7 +568,7 @@
             top: 50%;
             transform: translateY(-50%);
             width: 14px; height: 14px;
-            border-radius: 0;
+            border-radius: 50%;
             background: #000;
             border: 2px solid var(--cyan);
             box-shadow: 4px 4px 0px var(--cyan);
@@ -653,6 +653,35 @@
             line-height: 0.9;
         }
 
+        /* ── Idle Animations ── */
+        @keyframes float-idle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        @keyframes pulse-idle {
+            0%, 100% { opacity: 0.15; text-shadow: none; }
+            50% { opacity: 0.4; text-shadow: 0 0 15px var(--cyan); }
+        }
+        .tech-icon-item img { animation: float-idle 4s infinite ease-in-out; }
+        .tech-icon-item:nth-child(even) img { animation-delay: 1s; }
+        .tech-icon-item:nth-child(3n) img { animation-delay: 2.5s; }
+        .project-num { animation: pulse-idle 6s infinite ease-in-out; }
+        .project-card:nth-child(even) .project-num { animation-delay: 3s; }
+
+        /* ── Scroll Reveal Animations ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            filter: blur(8px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform, filter;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
         /* ── Philosophy section ── */
         .philosophy-section {
             padding: 7rem 2rem;
@@ -730,7 +759,7 @@
         .focus-card {
             background: #000;
             border: 2px solid var(--cyan);
-            border-radius: 0;
+            border-radius: 16px;
             padding: 2.5rem;
             position: relative;
             box-shadow: 8px 8px 0px var(--cyan);
@@ -825,7 +854,7 @@
             align-items: center;
             gap: 0.6rem;
             padding: 1.2rem 1rem;
-            border-radius: 0;
+            border-radius: 16px;
             border: 2px solid var(--grey);
             background: #000;
             box-shadow: 4px 4px 0px var(--grey);
@@ -1407,20 +1436,32 @@
 
         document.querySelectorAll('.glitch-text').forEach(el => {
             const html = el.innerHTML; el.innerHTML = '';
+            const letters = [];
             const parts = html.split(/(<br.*?>)/gi);
             parts.forEach(part => {
                 if (part.toLowerCase().startsWith('<br')) { el.appendChild(document.createElement('br')); }
                 else {
                     [...part].forEach(char => {
                         const span = document.createElement('span'); span.innerText = char === ' ' ? '\u00A0' : char; span.className = 'letter'; el.appendChild(span);
-                        span.addEventListener('mouseenter', () => {
+                        letters.push(span);
+                        const triggerGlitch = () => {
                             const x = (Math.random()-0.5)*100, y = (Math.random()-0.5)*100, r = (Math.random()-0.5)*60;
                             span.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg) scale(1.5)`; span.style.color = 'var(--neon)';
-                        });
-                        span.addEventListener('mouseleave', () => { setTimeout(() => { span.style.transform = ''; span.style.color = ''; }, 400); });
+                            setTimeout(() => { span.style.transform = ''; span.style.color = ''; }, 400);
+                        };
+                        span.addEventListener('mouseenter', triggerGlitch);
                     });
                 }
             });
+            // Idle random glitch effect
+            setInterval(() => {
+                if(Math.random() > 0.4 && letters.length > 0) {
+                    const rLetter = letters[Math.floor(Math.random() * letters.length)];
+                    const x = (Math.random()-0.5)*40, y = (Math.random()-0.5)*40, r = (Math.random()-0.5)*30;
+                    rLetter.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg) scale(1.2)`; rLetter.style.color = 'var(--cyan)';
+                    setTimeout(() => { rLetter.style.transform = ''; rLetter.style.color = ''; }, 200);
+                }
+            }, 600);
         });
 
         const partCanvas = document.getElementById('webgl-particles-bg'), glP = partCanvas.getContext('webgl', { alpha: true });
@@ -1493,6 +1534,18 @@
             requestAnimationFrame(draw);
         }
         draw();
+
+        // ── Scroll Reveal Intersection Observer ──
+        const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, revealOptions);
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
     </script>
 </body>
 </html>
