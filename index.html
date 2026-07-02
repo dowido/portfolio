@@ -72,6 +72,20 @@
             transition: width 0.2s, height 0.2s;
         }
 
+        .cursor-trail {
+            width: 8px; height: 8px;
+            background: rgba(0, 255, 200, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+        .cursor-trail:nth-child(2) { opacity: 0.8; width: 7px; height: 7px; }
+        .cursor-trail:nth-child(3) { opacity: 0.6; width: 6px; height: 6px; }
+        .cursor-trail:nth-child(4) { opacity: 0.4; width: 5px; height: 5px; }
+        .cursor-trail:nth-child(5) { opacity: 0.2; width: 4px; height: 4px; }
+
         h1, h2, h3 { font-family: 'Anton', sans-serif; letter-spacing: 2px; line-height: 0.9; margin: 0; }
 
         nav {
@@ -385,11 +399,6 @@
             * { cursor: auto !important; }
         }
 
-        /* ═══════════════════════════════════════════════════════════
-           VISUAL UPGRADE ADDITIONS — July 2026
-           All rules below add to / override the originals above.
-           The original structure is untouched.
-        ═══════════════════════════════════════════════════════════ */
 
         /* ── Dual accent variable ── */
         :root { --cyan: #00ffc8; }
@@ -403,10 +412,10 @@
         }
         .logo-rest { -webkit-text-fill-color: var(--fg); }
 
-        /* ── Nav links — softer, pill hover ── */
+        /* ── Nav links — softer hover ── */
         .nav-links a {
             color: rgba(244,244,244,0.6);
-            border-radius: 100px;
+            border-radius: 6px;
         }
         .nav-links a:hover {
             background: rgba(204,255,0,0.08);
@@ -433,7 +442,7 @@
             50%       { opacity: 0.85; }
         }
 
-        /* ── Available for Hire badge ── */
+        /* ── Available for Hire badge i deprecated this ── */
         .hero-status {
             display: inline-flex;
             align-items: center;
@@ -481,7 +490,7 @@
         }
 
         /* ── Shimmer on buttons ── */
-        .brutal-btn { overflow: hidden; border-radius: 100px; }
+        .brutal-btn { overflow: hidden; border-radius: 8px; }
         .brutal-btn::before {
             content: '';
             position: absolute;
@@ -906,6 +915,30 @@
             .tech-icon-item img { width: 36px; height: 36px; }
             .section-title { font-size: 3.5rem; }
         }
+        /* ── Hidden Terminal ── */
+        #easter-egg-terminal {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 999999;
+            display: flex; flex-direction: column;
+            padding: 3rem;
+            font-family: 'Space Mono', monospace;
+            color: var(--cyan);
+            text-transform: none;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s;
+            overflow-y: auto;
+        }
+        #easter-egg-terminal.visible { opacity: 1; pointer-events: all; }
+        #term-output { flex-grow: 1; display: flex; flex-direction: column; gap: 0.5rem; justify-content: flex-end; margin-bottom: 1rem; }
+        #term-output div { white-space: pre-wrap; word-wrap: break-word; line-height: 1.5; }
+        .term-prompt { color: var(--neon); margin-right: 0.8rem; font-weight: bold; flex-shrink: 0; }
+        #term-input-line { display: flex; align-items: center; }
+        #term-input {
+            background: transparent; border: none; color: var(--fg); font-family: inherit; font-size: 1rem; flex-grow: 1; outline: none;
+            caret-color: var(--neon);
+        }
     </style>
 </head>
 <body>
@@ -917,6 +950,10 @@
     
     <div class="noise"></div>
     <div class="cursor" id="cursor"></div>
+    <div class="cursor-trail"></div>
+    <div class="cursor-trail"></div>
+    <div class="cursor-trail"></div>
+    <div class="cursor-trail"></div>
 
     <nav>
         <div class="logo-container hover-target">
@@ -1218,8 +1255,8 @@
                     MASENO SCHOOL, KISUMU (2019&ndash;2022)
                 </p>
                 <div style="margin-top: 3rem; display:flex; gap:1rem; flex-wrap:wrap;">
-                    <a href="mailto:doncool933@gmail.com" class="brutal-btn hover-target" style="box-shadow: 6px 6px 0px #000; border-color: #000; color: #000;">EMAIL ///</a>
-                    <a href="https://github.com/dowido" target="_blank" class="brutal-btn hover-target" style="box-shadow: 6px 6px 0px #000; border-color: #000; color: #000;">GITHUB ///</a>
+                    <a href="mailto:doncool933@gmail.com" class="brutal-btn hover-target" style="box-shadow: 6px 6px 0px var(--cyan); border-color: var(--cyan); color: var(--cyan);">EMAIL ///</a>
+                    <a href="https://github.com/dowido" target="_blank" class="brutal-btn hover-target" style="box-shadow: 6px 6px 0px var(--neon); border-color: var(--neon); color: var(--neon);">GITHUB ///</a>
                 </div>
             </div>
         </div>
@@ -1240,6 +1277,17 @@
         <div>LOCATION: NJORO, NAKURU KE</div>
         <div>EMAIL: DONCOOL933@GMAIL.COM</div>
         <div>GITHUB: GITHUB.COM/DOWIDO</div>
+    </div>
+
+    <div id="easter-egg-terminal">
+        <div id="term-output">
+            <div>INITIALIZING ROOT ACCESS...</div>
+            <div>WELCOME TO THE MAINFRAME. TYPE 'help' FOR COMMANDS.</div>
+        </div>
+        <div id="term-input-line">
+            <span class="term-prompt">guest@donald-owido:~$</span>
+            <input type="text" id="term-input" autocomplete="off" spellcheck="false" />
+        </div>
     </div>
 
     <script>
@@ -1427,12 +1475,49 @@
         document.querySelectorAll('.reveal, .verge-card').forEach(el => observer.observe(el));
 
         const cursor = document.getElementById('cursor');
+        const trails = document.querySelectorAll('.cursor-trail');
         let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
-        document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; if (cursor) { cursor.style.left = mouseX + 'px'; cursor.style.top = mouseY + 'px'; } }, { passive: true });
-        document.querySelectorAll('.hover-target').forEach(t => {
+        let trailPositions = Array.from(trails).map(() => ({x: mouseX, y: mouseY}));
+        
+        document.addEventListener('mousemove', (e) => { 
+            mouseX = e.clientX; mouseY = e.clientY; 
+            if (cursor) { cursor.style.left = mouseX + 'px'; cursor.style.top = mouseY + 'px'; } 
+        }, { passive: true });
+
+        function updateTrails() {
+            let x = mouseX, y = mouseY;
+            trailPositions.forEach((pos, index) => {
+                pos.x += (x - pos.x) * 0.3;
+                pos.y += (y - pos.y) * 0.3;
+                trails[index].style.left = pos.x + 'px';
+                trails[index].style.top = pos.y + 'px';
+                x = pos.x; y = pos.y;
+            });
+            requestAnimationFrame(updateTrails);
+        }
+        updateTrails();
+
+        document.querySelectorAll('.hover-target, .brutal-btn').forEach(t => {
             t.addEventListener('mouseenter', () => { if(cursor) { cursor.style.width = '60px'; cursor.style.height = '60px'; } });
-            t.addEventListener('mouseleave', () => { if(cursor) { cursor.style.width = '20px'; cursor.style.height = '20px'; } });
+            t.addEventListener('mouseleave', () => { 
+                if(cursor) { cursor.style.width = '20px'; cursor.style.height = '20px'; } 
+                t.style.transform = 'translate(0px, 0px)';
+            });
+            t.addEventListener('mousemove', (e) => {
+                const rect = t.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width/2;
+                const y = e.clientY - rect.top - rect.height/2;
+                t.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
         });
+
+        // Parallax Effect
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            document.querySelectorAll('.project-num').forEach(num => {
+                num.style.transform = `translateY(${scrollY * 0.1}px)`;
+            });
+        }, { passive: true });
 
         document.querySelectorAll('.glitch-text').forEach(el => {
             const html = el.innerHTML; el.innerHTML = '';
@@ -1535,17 +1620,97 @@
         }
         draw();
 
+        // ── Hacker Decrypt Logic ──
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!<>-_\\/[]{}—=+*^?#_';
+        function decryptText(element) {
+            const originalText = element.dataset.original || element.innerText;
+            element.dataset.original = originalText;
+            let iteration = 0;
+            clearInterval(element.decryptInterval);
+            element.decryptInterval = setInterval(() => {
+                element.innerText = originalText.split('').map((letter, index) => {
+                    if(letter === ' ') return ' ';
+                    if(index < iteration) return originalText[index];
+                    return chars[Math.floor(Math.random() * chars.length)];
+                }).join('');
+                if(iteration >= originalText.length) clearInterval(element.decryptInterval);
+                iteration += 1 / 2;
+            }, 30);
+        }
+
         // ── Scroll Reveal Intersection Observer ──
         const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
         const revealObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if(entry.isIntersecting) {
                     entry.target.classList.add('active');
+                    if(entry.target.classList.contains('section-title')) decryptText(entry.target);
                     observer.unobserve(entry.target); // Only animate once
                 }
             });
         }, revealOptions);
-        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+        // ── Hidden Terminal Logic ──
+        const terminal = document.getElementById('easter-egg-terminal');
+        const termInput = document.getElementById('term-input');
+        const termOutput = document.getElementById('term-output');
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '`' || e.key === '~') {
+                e.preventDefault();
+                terminal.classList.toggle('visible');
+                if (terminal.classList.contains('visible')) {
+                    setTimeout(() => termInput.focus(), 100);
+                } else {
+                    termInput.blur();
+                }
+            }
+        });
+
+        termInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const cmd = termInput.value.trim();
+                termInput.value = '';
+                
+                if (cmd !== 'clear') {
+                    const echo = document.createElement('div');
+                    echo.innerHTML = `<span class="term-prompt">guest@donald-owido:~$</span>${cmd}`;
+                    termOutput.appendChild(echo);
+                }
+
+                const res = document.createElement('div');
+                res.style.color = 'var(--fg)';
+                const c = cmd.toLowerCase();
+                
+                if (c === 'help') res.innerHTML = "AVAILABLE COMMANDS:<br>  whoami    - print user details<br>  projects  - list project stack<br>  contact   - display comms<br>  ls        - list directory contents<br>  pwd       - print working directory<br>  date      - print system date<br>  cat       - concatenate files<br>  echo      - print text<br>  clear     - clear history<br>  exit      - close terminal";
+                else if (c === 'whoami') res.innerHTML = "DONALD OWIDO.<br>FULL-STACK DEV, ANDROID DEV, HACKATHON ENTHUSIAST.<br>CURRENTLY DEPLOYED AT EGERTON UNIVERSITY.";
+                else if (c === 'projects') res.innerHTML = "[1] CAMPUS BITE - Food delivery architecture<br>[2] EGERTON COMPANION - Kotlin native app<br>[3] DUKA APP - Point of sale system<br>[4] SMART LIGHT - WebSockets IoT";
+                else if (c === 'contact') res.innerHTML = "EMAIL: doncool933@gmail.com<br>GITHUB: github.com/dowido";
+                else if (c === 'ls') res.innerHTML = "<span style='color:var(--cyan)'>drwxr-xr-x</span>  projects/<br><span style='color:var(--cyan)'>drwxr-xr-x</span>  src/<br><span style='color:var(--fg)'>-rw-r--r--</span>  index.html<br><span style='color:var(--fg)'>-rw-r--r--</span>  resume.pdf";
+                else if (c === 'pwd') res.innerHTML = "/home/guest/portfolio";
+                else if (c === 'date') res.innerHTML = new Date().toString();
+                else if (c.startsWith('cat ')) {
+                    const arg = c.split(' ')[1];
+                    if (arg === 'resume.pdf') { res.innerHTML = "BINARY FILE CORRUPTED. PARSING FAILED."; res.style.color = '#FF6B6B'; }
+                    else if (arg === 'index.html') res.innerHTML = "&lt;!DOCTYPE html&gt;<br>&lt;html lang='en'&gt;<br>... [FILE TOO LARGE TO DISPLAY] ...";
+                    else res.innerHTML = `cat: ${arg}: No such file or directory`;
+                }
+                else if (c === 'cat') res.innerHTML = "cat: missing operand";
+                else if (c.startsWith('echo ')) res.innerHTML = cmd.substring(5);
+                else if (c.startsWith('cd ')) {
+                    const arg = c.split(' ')[1];
+                    if (arg === '..') { res.innerHTML = "ACCESS DENIED. CANNOT LEAVE SANDBOX."; res.style.color = '#FF6B6B'; }
+                    else res.innerHTML = `cd: ${arg}: No such file or directory`;
+                }
+                else if (c === 'clear') termOutput.innerHTML = '';
+                else if (c === 'exit') terminal.classList.remove('visible');
+                else if (c === 'sudo') { res.innerHTML = "ACCESS DENIED. THIS INCIDENT WILL BE REPORTED."; res.style.color = '#FF6B6B'; }
+                else if (c !== '') res.innerHTML = `command not found: ${cmd}`;
+
+                if (c !== 'clear' && c !== 'exit' && c !== '') termOutput.appendChild(res);
+                
+                terminal.scrollTop = terminal.scrollHeight;
+            }
+        });
     </script>
 </body>
 </html>
